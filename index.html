@@ -3,176 +3,139 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Torre Petrolera - Maqueta MDF 3D</title>
 
-    <!-- Fuente moderna de Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Importar el componente model-viewer de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
 
     <style>
-        /* Variables y Reset */
         :root {
             --bg-dark: #0f1115;
             --panel-bg: #1a1d24;
             --accent: #1a7917;
-            /* Naranja/Amarillo Petrolero/Seguridad */
-            --accent-hover: #1a7917;
+            --accent-glow: rgba(26, 121, 23, 0.4);
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
             --border: #2d323e;
-            --mdf-color: #9e8619;
-            /* Color madera cruda */
+            --sidebar-w: 340px;
+            --carousel-h: 100px;
         }
+
+        *, *::before, *::after { box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background-color: var(--bg-dark);
             color: var(--text-main);
-            display: flex;
-            height: 100vh;
+            height: 100dvh;
             overflow: hidden;
         }
 
-        /* Layout Principal */
+        /* ── LAYOUT DESKTOP ── */
         .app-container {
             display: flex;
             width: 100%;
             height: 100%;
         }
 
-        /* Panel Lateral (Controles) */
+        /* ══════════════════════════════
+           SIDEBAR
+        ══════════════════════════════ */
         .sidebar {
-            width: 360px;
+            width: var(--sidebar-w);
+            min-width: var(--sidebar-w);
             background-color: var(--panel-bg);
             border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 2px 0 20px rgba(0,0,0,0.6);
             z-index: 10;
+            transition: transform 0.35s cubic-bezier(.4,0,.2,1);
         }
 
         .sidebar-header {
-            padding: 24px 20px 16px;
+            padding: 20px 18px 14px;
             border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, #1e2230 0%, var(--panel-bg) 100%);
         }
 
         .sidebar-header h1 {
-            margin: 0 0 8px 0;
-            font-size: 22px;
+            margin: 0 0 6px 0;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
             font-weight: 700;
             color: #fff;
+            letter-spacing: 0.5px;
         }
 
         .price-tag {
-            font-size: 24px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 26px;
             font-weight: 700;
             color: var(--accent);
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .product-desc {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-muted);
             line-height: 1.5;
             margin: 0;
         }
 
         .sidebar-content {
-            padding: 20px;
+            padding: 16px;
             flex-grow: 1;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .sidebar-content h2 {
-            font-size: 13px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: var(--text-muted);
-            margin: 24px 0 16px;
+            margin: 20px 0 12px;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 8px;
+            padding-bottom: 6px;
         }
 
-        .sidebar-content h2:first-child {
-            margin-top: 0;
-        }
+        .sidebar-content h2:first-child { margin-top: 0; }
 
-        /* Botones de Temas */
-        .theme-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .btn-theme {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-theme:hover,
-        .btn-theme.active {
-            border-color: var(--accent);
-            background: rgba(245, 158, 11, 0.1);
-        }
-
-        .color-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Botón de Contacto/Compra */
+        /* Botón Comprar */
         .btn-buy {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             background-color: var(--accent);
-            color: #000;
+            color: #fff;
             border: none;
             border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: 20px;
+            transition: all 0.2s;
+            margin-top: 16px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 20px var(--accent-glow);
         }
 
-        .btn-buy:hover {
-            background-color: var(--accent-hover);
-        }
+        .btn-buy:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .btn-buy:active { transform: translateY(0); }
 
-        /* Estilos de los selectores de color (Opciones Avanzadas) */
-        .advanced-colors {
-            display: none;
-            /* Oculto por defecto para no asustar al cliente */
-        }
+        /* Colores avanzados */
+        .advanced-colors { display: none; }
 
         .material-item {
-            background-color: rgba(255, 255, 255, 0.02);
+            background: rgba(255,255,255,0.02);
             border: 1px solid var(--border);
             border-radius: 6px;
             padding: 8px 12px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -192,18 +155,13 @@
             -webkit-appearance: none;
             appearance: none;
             border: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 4px;
+            width: 32px; height: 32px;
+            border-radius: 6px;
             cursor: pointer;
             padding: 0;
             background: none;
         }
-
-        input[type="color"]::-webkit-color-swatch-wrapper {
-            padding: 0;
-        }
-
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
         input[type="color"]::-webkit-color-swatch {
             border: 1px solid var(--border);
             border-radius: 4px;
@@ -214,38 +172,35 @@
             background: none;
             border: 1px dashed var(--border);
             color: var(--text-muted);
-            padding: 8px;
+            padding: 10px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
             margin-top: 10px;
+            transition: all 0.2s;
         }
 
-        .btn-toggle-colors:hover {
-            color: white;
-            border-color: #555;
-        }
+        .btn-toggle-colors:hover { color: white; border-color: #555; }
 
-        /* Área del Visor 3D */
+        /* ══════════════════════════════
+           VISOR PRINCIPAL
+        ══════════════════════════════ */
         .main-view {
             flex-grow: 1;
             position: relative;
             background-image: radial-gradient(circle at center, #1a1d24 0%, #0f1115 100%);
             overflow: hidden;
+            min-width: 0;
         }
 
-        /* Plano/Rejilla 3D en el piso */
         .floor-grid {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             height: 50%;
             background-image:
-                linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+                linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px);
             background-size: 50px 50px;
-            background-position: center bottom;
             transform: perspective(500px) rotateX(70deg);
             transform-origin: bottom center;
             pointer-events: none;
@@ -262,27 +217,34 @@
             z-index: 1;
         }
 
-        /* Estilos de las Anotaciones (Hotspots) */
+        /* Fallback imagen */
+        #mainImageFallback {
+            display: none;
+            width: 100%; height: 100%;
+            object-fit: contain;
+            position: relative;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Hotspots */
         .hotspot {
             display: block;
-            width: 24px;
-            height: 24px;
+            width: 28px; height: 28px;
             border-radius: 50%;
             border: 2px solid #fff;
             background-color: var(--accent);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
             cursor: pointer;
             transition: transform 0.2s;
         }
 
-        .hotspot:hover {
-            transform: scale(1.2);
-        }
+        .hotspot:hover { transform: scale(1.2); }
 
         .hotspot-annotation {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0,0,0,0.85);
             border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             color: #fff;
             display: block;
             font-family: 'Inter', sans-serif;
@@ -296,116 +258,151 @@
             transform: translateY(-50%);
             width: max-content;
             backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.1);
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s;
         }
 
-        .hotspot:hover .hotspot-annotation {
-            opacity: 1;
-        }
+        .hotspot:hover .hotspot-annotation { opacity: 1; }
 
+        /* Instrucciones – solo desktop */
         .instructions {
             position: absolute;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.6);
+            top: 16px; left: 16px;
+            background: rgba(0,0,0,0.55);
             backdrop-filter: blur(8px);
-            padding: 10px 20px;
+            padding: 8px 14px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
             pointer-events: none;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.08);
             z-index: 10;
         }
 
         kbd {
-            background-color: rgba(255, 255, 255, 0.1);
+            background: rgba(255,255,255,0.1);
             border-radius: 4px;
-            padding: 2px 6px;
+            padding: 1px 5px;
             font-family: monospace;
             color: #fff;
         }
 
-        /* Botón de Galería Flotante */
+        /* Botón Galería */
         .btn-gallery {
             position: absolute;
-            top: 24px;
-            right: 24px;
-            background: rgba(0, 0, 0, 0.6);
+            top: 16px; right: 16px;
+            background: rgba(0,0,0,0.6);
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 18px;
             border-radius: 30px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.2s;
             z-index: 15;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .btn-gallery:hover {
             background: var(--accent);
-            color: black;
+            color: white;
             border-color: var(--accent);
             transform: translateY(-2px);
         }
 
-        /* Modal de Galería */
+        /* Carrusel */
+        .models-carousel {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+            background: rgba(0,0,0,0.65);
+            padding: 10px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+            max-width: calc(100% - 32px);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .models-carousel::-webkit-scrollbar { display: none; }
+
+        .model-thumb {
+            width: 60px; height: 60px;
+            min-width: 60px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: var(--panel-bg);
+            padding: 0;
+        }
+
+        .model-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+        .model-thumb:hover { border-color: var(--text-muted); transform: translateY(-4px); }
+
+        .model-thumb.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 14px var(--accent-glow);
+            transform: translateY(-4px);
+        }
+
+        /* ══════════════════════════════
+           MODAL GALERÍA
+        ══════════════════════════════ */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            inset: 0;
+            background: rgba(0,0,0,0.88);
             backdrop-filter: blur(10px);
             z-index: 100;
             display: none;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
-        .modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
+        .modal-overlay.active { display: flex; }
 
         .modal-content {
-            width: 90%;
-            max-width: 1200px;
+            width: 94%;
+            max-width: 1100px;
+            max-height: 92dvh;
             background: var(--panel-bg);
             border-radius: 12px;
             border: 1px solid var(--border);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
         .modal-header {
-            padding: 20px 24px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: #15171d;
+            flex-shrink: 0;
         }
 
         .modal-header h2 {
             margin: 0;
-            font-size: 20px;
-            font-weight: 600;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
             color: white;
         }
 
@@ -416,154 +413,231 @@
             font-size: 28px;
             line-height: 1;
             cursor: pointer;
-            transition: color 0.2s;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
         }
 
-        .btn-close:hover {
-            color: white;
-        }
+        .btn-close:hover { color: white; background: rgba(255,255,255,0.08); }
 
         .gallery-grid {
-            padding: 24px;
+            padding: 16px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
-            max-height: 75vh;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            flex-grow: 1;
         }
 
         .gallery-item {
             aspect-ratio: 4/3;
-            background-color: rgba(255, 255, 255, 0.03);
+            background: rgba(255,255,255,0.03);
             border-radius: 8px;
             border: 1px solid var(--border);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: var(--text-muted);
-            font-size: 13px;
             overflow: hidden;
             cursor: pointer;
             transition: all 0.2s;
-            position: relative;
         }
 
         .gallery-item:hover {
             border-color: var(--accent);
             transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         .gallery-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background-color: #111;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            background: #111;
         }
 
+        /* Visor imagen completa */
         .image-viewer {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            inset: 0;
+            background: rgba(0,0,0,0.97);
             z-index: 200;
             display: none;
             justify-content: center;
             align-items: center;
         }
 
-        .image-viewer.active {
-            display: flex;
-        }
+        .image-viewer.active { display: flex; }
 
         .image-viewer img {
             max-width: 95%;
-            max-height: 95%;
+            max-height: 95dvh;
             object-fit: contain;
             border-radius: 4px;
         }
 
         .image-viewer-close {
             position: absolute;
-            top: 24px;
-            right: 32px;
-            background: none;
-            border: none;
+            top: 16px; right: 20px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            font-size: 40px;
+            font-size: 28px;
+            width: 44px; height: 44px;
+            border-radius: 50%;
             cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .image-viewer-close:hover {
-            color: var(--accent);
-        }
-
-        /* Contenedor de Selección de Modelos */
-        .models-carousel {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
-            gap: 16px;
-            z-index: 20;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 12px;
-            border-radius: 12px;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .model-thumb {
-            width: 70px;
-            height: 70px;
-            border-radius: 8px;
-            border: 2px solid transparent;
-            overflow: hidden;
-            cursor: pointer;
+            align-items: center;
+            justify-content: center;
             transition: all 0.2s;
-            background-color: var(--panel-bg);
-            padding: 0;
         }
 
-        .model-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .image-viewer-close:hover { background: var(--accent); border-color: var(--accent); }
+
+        /* ══════════════════════════════
+           BOTÓN HAMBURGUESA (MÓVIL)
+        ══════════════════════════════ */
+        .btn-menu {
+            display: none;
+            position: fixed;
+            bottom: 130px;
+            right: 16px;
+            z-index: 50;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: none;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transition: all 0.2s;
         }
 
-        .model-thumb:hover {
-            border-color: var(--text-muted);
-            transform: translateY(-5px);
+        .btn-menu:active { transform: scale(0.92); }
+
+        .btn-menu svg { width: 22px; height: 22px; fill: white; }
+
+        /* Overlay para cerrar sidebar en móvil */
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 9;
         }
 
-        .model-thumb.active {
-            border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(26, 121, 23, 0.5);
-            transform: translateY(-5px);
+        .sidebar-backdrop.active { display: block; }
+
+        /* ══════════════════════════════
+           RESPONSIVE MÓVIL
+        ══════════════════════════════ */
+        @media (max-width: 768px) {
+
+            body { overflow: hidden; }
+
+            .app-container { flex-direction: column; }
+
+            /* El sidebar se vuelve un panel deslizable desde la izquierda */
+            .sidebar {
+                position: fixed;
+                top: 0; left: 0;
+                height: 100%;
+                width: min(320px, 88vw);
+                min-width: unset;
+                z-index: 30;
+                transform: translateX(-105%);
+                border-right: 1px solid var(--border);
+            }
+
+            .sidebar.open { transform: translateX(0); }
+
+            /* El visor ocupa toda la pantalla */
+            .main-view {
+                width: 100%;
+                height: 100dvh;
+            }
+
+            /* Botón hamburguesa visible */
+            .btn-menu { display: flex; }
+
+            /* Instrucciones más pequeñas o escondidas en móvil */
+            .instructions { display: none; }
+
+            /* Botón galería más compacto */
+            .btn-gallery {
+                top: 12px; right: 12px;
+                padding: 9px 14px;
+                font-size: 13px;
+            }
+
+            /* Carrusel pega al fondo */
+            .models-carousel {
+                bottom: 12px;
+                padding: 8px;
+                gap: 8px;
+            }
+
+            .model-thumb {
+                width: 54px; height: 54px;
+                min-width: 54px;
+            }
+
+            /* Galería en móvil: 2 columnas */
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 12px;
+            }
+
+            /* Modal más alto en móvil */
+            .modal-content {
+                width: 100%;
+                height: 92dvh;
+                border-radius: 16px 16px 0 0;
+                align-self: flex-end;
+            }
+
+            .modal-overlay {
+                align-items: flex-end;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .model-thumb {
+                width: 48px; height: 48px;
+                min-width: 48px;
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Botón hamburguesa para móvil -->
+    <button class="btn-menu" id="btnMenu" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect y="4" width="24" height="2.5" rx="1.25"/>
+            <rect y="10.75" width="24" height="2.5" rx="1.25"/>
+            <rect y="17.5" width="24" height="2.5" rx="1.25"/>
+        </svg>
+    </button>
+
+    <!-- Overlay para cerrar sidebar -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
     <div class="app-container">
-        <!-- Panel Lateral -->
-        <aside class="sidebar">
+
+        <!-- ── PANEL LATERAL ── -->
+        <aside class="sidebar" id="sidebar">
             <header class="sidebar-header">
                 <h1 id="productTitle">Torre Petrolera Escala</h1>
                 <span class="price-tag" id="productPrice">$200.000</span>
-                <p class="product-desc" id="productDesc">Maqueta de alta precisión cortada en láser y ensamblada a mano
-                    en madera MDF. Ideal para exhibiciones corporativas o regalos de la industria.</p>
+                <p class="product-desc" id="productDesc">Maqueta de alta precisión cortada en láser y ensamblada a mano en madera MDF. Ideal para exhibiciones corporativas o regalos de la industria.</p>
             </header>
 
             <div class="sidebar-content">
                 <h2>Detalles Técnicos</h2>
-                <ul id="productDetails" style="font-size: 14px; color: #ccc; padding-left: 20px; margin-bottom: 24px;">
+                <ul id="productDetails" style="font-size:13px;color:#ccc;padding-left:18px;margin-bottom:20px;line-height:1.8;">
                     <li>Material: MDF de 2.7mm</li>
                     <li>Altura aprox: 21 cm</li>
                     <li>Modular: Sí</li>
@@ -573,31 +647,37 @@
                     Consultar Pedido
                 </button>
 
-                <h2 style="margin-top: 30px;">Ajuste Experto</h2>
+                <h2 style="margin-top:28px;">Ajuste Experto</h2>
                 <button class="btn-toggle-colors" id="btnToggleColors">Personalizar piezas individualmente</button>
                 <div id="materialsPanel" class="advanced-colors">
-                    <p class="loading-text" style="padding: 10px;">Cargando piezas del modelo...</p>
+                    <p style="padding:10px;font-size:13px;color:var(--text-muted);">Cargando piezas del modelo...</p>
                 </div>
             </div>
         </aside>
 
-        <!-- Visor Principal -->
+        <!-- ── VISOR PRINCIPAL ── -->
         <main class="main-view">
-            <!-- Rejilla de piso -->
             <div class="floor-grid"></div>
 
-            <!-- Botón flotante para la galería -->
+            <!-- Botón galería -->
             <button class="btn-gallery" id="btnOpenGallery">
-                📷 Ver Fotos Reales
+                📷 Ver Fotos
             </button>
 
-            <!-- Imagen central (cuando no hay modelo 3D) -->
-            <img id="mainImageFallback" alt="Imagen del modelo"
-                style="display: none; width: 100%; height: 100%; object-fit: contain; position: relative; z-index: 1; pointer-events: none;">
+            <!-- Fallback imagen estática -->
+            <img id="mainImageFallback" alt="Imagen del modelo">
 
-            <model-viewer id="myViewer" src="modelo.glb" alt="Maqueta Maquina de Bombeo (machin)" camera-controls
-                auto-rotate shadow-intensity="1.5" shadow-softness="0.5" exposure="1" environment-image="neutral"
-                interaction-prompt="auto">
+            <model-viewer id="myViewer"
+                src="modelo.glb"
+                alt="Maqueta Torre Petrolera"
+                camera-controls
+                auto-rotate
+                shadow-intensity="1.5"
+                shadow-softness="0.5"
+                exposure="1"
+                environment-image="neutral"
+                interaction-prompt="auto"
+                touch-action="pan-y">
 
                 <button class="hotspot" slot="hotspot-1" data-position="0 0.5 0" data-normal="0 1 0">
                     <div class="hotspot-annotation">Corona o Bloque Superior</div>
@@ -606,170 +686,154 @@
                 <button class="hotspot" slot="hotspot-2" data-position="0.2 0.2 0.2" data-normal="1 0 0">
                     <div class="hotspot-annotation">Estructura de soporte (2.7mm)</div>
                 </button>
-
             </model-viewer>
 
-            <div class="instructions" style="position: absolute; top: 24px; left: 24px; transform: none; bottom: auto;">
-                <kbd>Clic Izquierdo</kbd> Rotar | <kbd>Clic Derecho</kbd> Mover | <kbd>Rueda</kbd> Zoom
+            <!-- Instrucciones (solo desktop) -->
+            <div class="instructions">
+                <kbd>Clic Izq.</kbd> Rotar &nbsp;|&nbsp; <kbd>Clic Der.</kbd> Mover &nbsp;|&nbsp; <kbd>Rueda</kbd> Zoom
             </div>
 
-            <!-- Carrusel de selección de modelos -->
-            <div class="models-carousel" id="modelsCarousel">
-                <!-- Se llena dinámicamente con JS -->
-            </div>
+            <!-- Carrusel miniaturas -->
+            <div class="models-carousel" id="modelsCarousel"></div>
         </main>
     </div>
 
-    <!-- Modal de Galería de Fotos Reales -->
+    <!-- ── MODAL GALERÍA ── -->
     <div class="modal-overlay" id="galleryModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Catálogo de Maquetas Reales</h2>
                 <button class="btn-close" id="btnCloseGallery" title="Cerrar">&times;</button>
             </div>
-            <div class="gallery-grid" id="galleryGrid">
-                <!-- Se llenará dinámicamente con JS -->
-            </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
         </div>
     </div>
 
-    <!-- Visor de imagen en pantalla completa -->
+    <!-- ── VISOR IMAGEN COMPLETA ── -->
     <div class="image-viewer" id="imageViewer">
         <button class="image-viewer-close" id="btnCloseImageViewer" title="Cerrar">&times;</button>
         <img src="" id="fullSizeImage" alt="Imagen en grande">
     </div>
 
-    <!-- Script de Lógica -->
+    <!-- ══════════ SCRIPTS ══════════ -->
     <script>
-        const modelViewer = document.querySelector('#myViewer');
+        /* ── Elementos ── */
+        const modelViewer      = document.querySelector('#myViewer');
         const mainImageFallback = document.getElementById('mainImageFallback');
-        const materialsPanel = document.querySelector('#materialsPanel');
-        const btnToggleColors = document.querySelector('#btnToggleColors');
+        const materialsPanel   = document.querySelector('#materialsPanel');
+        const btnToggleColors  = document.querySelector('#btnToggleColors');
+        const modelsCarousel   = document.getElementById('modelsCarousel');
+        const productTitle     = document.getElementById('productTitle');
+        const productPrice     = document.getElementById('productPrice');
+        const productDesc      = document.getElementById('productDesc');
+        const productDetails   = document.getElementById('productDetails');
 
-        // Elementos Dinámicos
-        const modelsCarousel = document.getElementById('modelsCarousel');
-        const productTitle = document.getElementById('productTitle');
-        const productPrice = document.getElementById('productPrice');
-        const productDesc = document.getElementById('productDesc');
-        const productDetails = document.getElementById('productDetails');
-
-        // Referencias para la Galería
-        const btnOpenGallery = document.getElementById('btnOpenGallery');
-        const btnCloseGallery = document.getElementById('btnCloseGallery');
-        const galleryModal = document.getElementById('galleryModal');
-        const galleryGrid = document.getElementById('galleryGrid');
-        const imageViewer = document.getElementById('imageViewer');
+        const btnOpenGallery      = document.getElementById('btnOpenGallery');
+        const btnCloseGallery     = document.getElementById('btnCloseGallery');
+        const galleryModal        = document.getElementById('galleryModal');
+        const galleryGrid         = document.getElementById('galleryGrid');
+        const imageViewer         = document.getElementById('imageViewer');
         const btnCloseImageViewer = document.getElementById('btnCloseImageViewer');
-        const fullSizeImage = document.getElementById('fullSizeImage');
+        const fullSizeImage       = document.getElementById('fullSizeImage');
 
-        // Lista de todas fotos que copiamos de tu carpeta
+        const sidebar         = document.getElementById('sidebar');
+        const btnMenu         = document.getElementById('btnMenu');
+        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+        /* ── Sidebar móvil ── */
+        function openSidebar() {
+            sidebar.classList.add('open');
+            sidebarBackdrop.classList.add('active');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            sidebarBackdrop.classList.remove('active');
+        }
+
+        btnMenu.addEventListener('click', () => {
+            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+        });
+
+        sidebarBackdrop.addEventListener('click', closeSidebar);
+
+        /* ── Fotos galería ── */
         const misFotos = [
-            "torre1.jpeg", "torre 2.jpg", "torre 3.jpg", "torre 4.jpg", "torre 5.jpg",
-            "torre 6.jpg", "torre 7.jpg", "torre 8.jpg", "torre 9.jpg", "torre 10.jpg",
-            "torre 11.jpg", "torre 12.jpg", "torre 13.jpg", "torre 14.jpg", "torre 15.jpg",
-            "torre 16.jpg", "torre 17.jpg", "torre 18.jpg", "torre 19.jpg", "torre 20.jpg",
-            "torre 21.jpg", "torre 22.jpg", "torre 23.jpg", "torre 24.jpg",
-            "Base de torre 1.jpg", "Base de torre 2.jpg", "Base de torre 3.jpg",
-            "Base de torre 4.jpg", "Base de torre 5.jpg", "drawworks_schematic.png"
+            "torre1.jpeg","torre 2.jpg","torre 3.jpg","torre 4.jpg","torre 5.jpg",
+            "torre 6.jpg","torre 7.jpg","torre 8.jpg","torre 9.jpg","torre 10.jpg",
+            "torre 11.jpg","torre 12.jpg","torre 13.jpg","torre 14.jpg","torre 15.jpg",
+            "torre 16.jpg","torre 17.jpg","torre 18.jpg","torre 19.jpg","torre 20.jpg",
+            "torre 21.jpg","torre 22.jpg","torre 23.jpg","torre 24.jpg",
+            "Base de torre 1.jpg","Base de torre 2.jpg","Base de torre 3.jpg",
+            "Base de torre 4.jpg","Base de torre 5.jpg","drawworks_schematic.png"
         ];
 
-        // Rellenar galería dinámicamente al iniciar
         misFotos.forEach(foto => {
             const item = document.createElement('div');
             item.className = 'gallery-item';
-
             const img = document.createElement('img');
-            img.src = "fotos/" + foto; // Ahora lee directamente la carpeta de fotos
+            img.src = "fotos/" + foto;
             img.className = 'gallery-img';
             img.alt = foto;
-
+            img.loading = 'lazy';
             item.appendChild(img);
-
-            // Evento para abrirla en grande
             item.addEventListener('click', () => {
                 fullSizeImage.src = img.src;
                 imageViewer.classList.add('active');
             });
-
             galleryGrid.appendChild(item);
         });
 
-        // LÓGICA DE GALERÍA (Modal)
-        btnOpenGallery.addEventListener('click', () => {
-            galleryModal.classList.add('active');
-        });
+        /* ── Galería modal ── */
+        btnOpenGallery.addEventListener('click', () => galleryModal.classList.add('active'));
+        btnCloseGallery.addEventListener('click', () => galleryModal.classList.remove('active'));
+        galleryModal.addEventListener('click', e => { if (e.target === galleryModal) galleryModal.classList.remove('active'); });
 
-        btnCloseGallery.addEventListener('click', () => {
-            galleryModal.classList.remove('active');
-        });
-
-        // Cerrar visor de imagen completa
+        /* ── Visor imagen completa ── */
         btnCloseImageViewer.addEventListener('click', () => {
             imageViewer.classList.remove('active');
             setTimeout(() => { fullSizeImage.src = ''; }, 300);
         });
 
-        // También cerramos la imagen en grande si se hace clic en el fondo negro
-        imageViewer.addEventListener('click', (e) => {
+        imageViewer.addEventListener('click', e => {
             if (e.target === imageViewer) {
                 imageViewer.classList.remove('active');
                 setTimeout(() => { fullSizeImage.src = ''; }, 300);
             }
         });
 
-        // Cerrar galería general al hacer clic en el fondo oscuro
-        galleryModal.addEventListener('click', (e) => {
-            if (e.target === galleryModal) galleryModal.classList.remove('active');
-        });
-
-
-        // LÓGICA DE COLORES AVANZADOS -------------
+        /* ── Colores avanzados ── */
         btnToggleColors.addEventListener('click', () => {
-            if (materialsPanel.style.display === 'block') {
-                materialsPanel.style.display = 'none';
-                btnToggleColors.textContent = 'Personalizar piezas individualmente';
-            } else {
-                materialsPanel.style.display = 'block';
-                btnToggleColors.textContent = 'Ocultar personalización';
-            }
+            const visible = materialsPanel.style.display === 'block';
+            materialsPanel.style.display = visible ? 'none' : 'block';
+            btnToggleColors.textContent = visible ? 'Personalizar piezas individualmente' : 'Ocultar personalización';
         });
 
         function hexToRgba(hex) {
-            let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? [
-                parseInt(result[1], 16) / 255,
-                parseInt(result[2], 16) / 255,
-                parseInt(result[3], 16) / 255,
-                1.0
-            ] : null;
+            const r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return r ? [parseInt(r[1],16)/255, parseInt(r[2],16)/255, parseInt(r[3],16)/255, 1.0] : null;
         }
 
         modelViewer.addEventListener('load', () => {
             if (!modelViewer.model) return;
             const materials = modelViewer.model.materials;
-            if (!materials || materials.length === 0) return;
+            if (!materials?.length) return;
 
             materialsPanel.innerHTML = '';
-
             materials.forEach((material, index) => {
-                let materialName = material.name || `Pieza ${index + 1}`;
-                materialName = materialName.replace('Material_', '').replace('.001', '');
-
+                let name = (material.name || `Pieza ${index + 1}`).replace('Material_','').replace('.001','');
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'material-item';
 
                 const nameSpan = document.createElement('span');
                 nameSpan.className = 'material-name';
-                nameSpan.textContent = materialName;
+                nameSpan.textContent = name;
 
                 const colorInput = document.createElement('input');
                 colorInput.type = 'color';
-                colorInput.value = '#dcb382'; // Color MDF base
-
-                colorInput.addEventListener('input', (event) => {
-                    const newColor = event.target.value;
-                    const rgbaColor = hexToRgba(newColor);
-                    material.pbrMetallicRoughness.setBaseColorFactor(rgbaColor);
+                colorInput.value = '#dcb382';
+                colorInput.addEventListener('input', e => {
+                    material.pbrMetallicRoughness.setBaseColorFactor(hexToRgba(e.target.value));
                 });
 
                 itemDiv.appendChild(nameSpan);
@@ -778,13 +842,13 @@
             });
         });
 
-        // LÓGICA DEL CARRUSEL DE MODELOS -------------
+        /* ── Catálogo de modelos ── */
         const catalog = [
             {
                 id: 'torre',
                 title: 'Torre Petrolera Escala',
                 price: '$200.000',
-                desc: 'Maqueta de alta precisión cortada en láser y ensamblada a mano en madera MDF. Ideal para exhibiciones corporativas o regalos de la industria.',
+                desc: 'Maqueta de alta precisión cortada en láser y ensamblada a mano en madera MDF.',
                 details: ['Material: MDF de 2.7mm', 'Altura aprox: 21 cm', 'Modular: Sí'],
                 src: 'modelo.glb',
                 thumb: 'articulos/art1.png'
@@ -793,27 +857,27 @@
                 id: 'ejemplo1',
                 title: 'Soporte Industrial',
                 price: '$85.000',
-                desc: 'Base de estructura secundaria (Ejemplo para que añadas más archivos .glb).',
+                desc: 'Base de estructura secundaria.',
                 details: ['Material: MDF de 4mm', 'Alta resistencia', 'Fácil armado'],
-                src: '', // Aquí pondrías 'soporte.glb'
+                src: '',
                 thumb: 'articulos/art2.png'
             },
             {
                 id: 'ejemplo2',
-                title: 'Modelo 3D Catapulta',
+                title: 'Catapulta MDF',
                 price: '$150.000',
-                desc: 'Otra maqueta a modo de ejemplo.',
+                desc: 'Maqueta interactiva con movilidad funcional.',
                 details: ['Material: MDF', 'Interactiva', 'Movilidad funcional'],
-                src: '', // 'catapulta.glb'
+                src: '',
                 thumb: 'articulos/art3.png'
             },
             {
                 id: 'ejemplo3',
-                title: 'Modelo 3D Catapulta',
+                title: 'Torre Serie II',
                 price: '$250.000',
                 desc: 'Otra maqueta torre en MDF.',
                 details: ['Material: MDF', 'Interactiva', 'Movilidad funcional'],
-                src: '', // 'catapulta.glb'
+                src: '',
                 thumb: 'fotos/torre 2.jpg'
             }
         ];
@@ -821,12 +885,12 @@
         function loadModelData(product) {
             productTitle.textContent = product.title;
             productPrice.textContent = product.price;
-            productDesc.textContent = product.desc;
+            productDesc.textContent  = product.desc;
 
             productDetails.innerHTML = '';
-            product.details.forEach(detail => {
+            product.details.forEach(d => {
                 const li = document.createElement('li');
-                li.textContent = detail;
+                li.textContent = d;
                 productDetails.appendChild(li);
             });
 
@@ -835,21 +899,23 @@
                 modelViewer.style.display = 'block';
                 mainImageFallback.style.display = 'none';
             } else {
-                modelViewer.src = ''; // Vaciar modelo
+                modelViewer.src = '';
                 modelViewer.style.display = 'none';
-                mainImageFallback.src = product.thumb; // Cargar la foto al centro
-                mainImageFallback.style.display = 'block'; // Mostrar la foto
+                mainImageFallback.src = product.thumb;
+                mainImageFallback.style.display = 'block';
             }
 
             materialsPanel.style.display = 'none';
             btnToggleColors.textContent = 'Personalizar piezas individualmente';
+
+            // En móvil, cerrar el sidebar al seleccionar producto
+            if (window.innerWidth <= 768) closeSidebar();
         }
 
         catalog.forEach((item, index) => {
             const btn = document.createElement('button');
             btn.className = 'model-thumb' + (index === 0 ? ' active' : '');
-            btn.innerHTML = `<img src="${item.thumb}" alt="${item.title}" title="${item.title}">`;
-
+            btn.innerHTML = `<img src="${item.thumb}" alt="${item.title}" title="${item.title}" loading="lazy">`;
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.model-thumb').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
@@ -858,19 +924,18 @@
             modelsCarousel.appendChild(btn);
         });
 
-        // Cargar el modelo inicial
         if (catalog.length > 0) loadModelData(catalog[0]);
 
-        /* Obtener Coordenadas en consola F12 para las etiquetas/hotspots */
-        modelViewer.addEventListener('click', (event) => {
-            const hit = modelViewer.positionAndNormalFromPoint(event.clientX, event.clientY);
-            if (hit) {
-                console.log('Nuevas coordenadas para el hotspot:');
-                console.log(`data-position="${hit.position.toString()}"`);
-                console.log(`data-normal="${hit.normal.toString()}"`);
-            }
+        /* Debug hotspots (consola) */
+        modelViewer.addEventListener('click', event => {
+            try {
+                if (typeof modelViewer.positionAndNormalFromPoint !== 'function') return;
+                const hit = modelViewer.positionAndNormalFromPoint(event.clientX, event.clientY);
+                if (hit) {
+                    console.log(`data-position="${hit.position}" data-normal="${hit.normal}"`);
+                }
+            } catch(e) { /* ignorar */ }
         });
     </script>
 </body>
-
 </html>
