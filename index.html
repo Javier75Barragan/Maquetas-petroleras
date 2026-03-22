@@ -553,10 +553,20 @@
                 height: 100dvh;
             }
 
-            /* Botón hamburguesa visible */
-            .btn-menu { display: flex; }
+            /* model-viewer deja espacio para el carrusel abajo (96px carrusel + 24px márgenes) */
+            model-viewer {
+                height: calc(100% - 120px) !important;
+                position: absolute;
+                top: 0; left: 0; right: 0;
+            }
 
-            /* Instrucciones más pequeñas o escondidas en móvil */
+            /* Botón hamburguesa encima del carrusel */
+            .btn-menu {
+                display: flex;
+                bottom: 100px;
+            }
+
+            /* Instrucciones escondidas en móvil */
             .instructions { display: none; }
 
             /* Botón galería más compacto */
@@ -566,11 +576,13 @@
                 font-size: 13px;
             }
 
-            /* Carrusel pega al fondo */
+            /* Carrusel pegado al fondo */
             .models-carousel {
                 bottom: 12px;
                 padding: 8px;
                 gap: 8px;
+                /* Asegurar que quede por encima del área táctil */
+                z-index: 25;
             }
 
             .model-thumb {
@@ -882,6 +894,8 @@
             }
         ];
 
+        let currentProductId = null;
+
         function loadModelData(product) {
             productTitle.textContent = product.title;
             productPrice.textContent = product.price;
@@ -894,19 +908,22 @@
                 productDetails.appendChild(li);
             });
 
-            if (product.src) {
-                modelViewer.src = product.src;
-                modelViewer.style.display = 'block';
-                mainImageFallback.style.display = 'none';
-            } else {
-                modelViewer.src = '';
-                modelViewer.style.display = 'none';
-                mainImageFallback.src = product.thumb;
-                mainImageFallback.style.display = 'block';
+            // Solo recargar el modelo si cambió el producto
+            if (product.id !== currentProductId) {
+                currentProductId = product.id;
+                if (product.src) {
+                    modelViewer.src = product.src;
+                    modelViewer.style.display = 'block';
+                    mainImageFallback.style.display = 'none';
+                } else {
+                    modelViewer.src = '';
+                    modelViewer.style.display = 'none';
+                    mainImageFallback.src = product.thumb;
+                    mainImageFallback.style.display = 'block';
+                }
+                materialsPanel.style.display = 'none';
+                btnToggleColors.textContent = 'Personalizar piezas individualmente';
             }
-
-            materialsPanel.style.display = 'none';
-            btnToggleColors.textContent = 'Personalizar piezas individualmente';
 
             // En móvil, cerrar el sidebar al seleccionar producto
             if (window.innerWidth <= 768) closeSidebar();
