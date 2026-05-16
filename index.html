@@ -3,621 +3,341 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Torre Petrolera - Maqueta MDF 3D</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torres Petroleras y Máquinas de Bombeo | Portfolio Premium</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <!-- Fuentes modernas -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
-            --bg-dark: #0f1115;
-            --panel-bg: #1a1d24;
-            --accent: #1a7917;
-            --accent-glow: rgba(26, 121, 23, 0.4);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --border: #2d323e;
-            --sidebar-w: 340px;
-            --carousel-h: 100px;
+            /* Paleta Premium Oil & Gas: Azul Medianoche y Oro */
+            --bg-base: #060e18;
+            --bg-surface: #0a1626;
+            --bg-surface-elevated: #11223b;
+            --accent-primary: #d4af37; /* Oro industrial */
+            --accent-glow: rgba(212, 175, 55, 0.2);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #1e293b;
         }
 
-        *, *::before, *::after { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 0; padding: 0;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            height: 100dvh;
-            overflow: hidden;
-        }
-
-        /* ── LAYOUT DESKTOP ── */
-        .app-container {
-            display: flex;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* ══════════════════════════════
-           SIDEBAR
-        ══════════════════════════════ */
-        .sidebar {
-            width: var(--sidebar-w);
-            min-width: var(--sidebar-w);
-            background-color: var(--panel-bg);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            box-shadow: 2px 0 20px rgba(0,0,0,0.6);
-            z-index: 10;
-            transition: transform 0.35s cubic-bezier(.4,0,.2,1);
-        }
-
-        .sidebar-header {
-            padding: 20px 18px 14px;
-            border-bottom: 1px solid var(--border);
-            background: linear-gradient(180deg, #1e2230 0%, var(--panel-bg) 100%);
-        }
-
-        .sidebar-header h1 {
-            margin: 0 0 6px 0;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 0.5px;
-        }
-
-        .price-tag {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--accent);
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .product-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        .sidebar-content {
-            padding: 16px;
-            flex-grow: 1;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .sidebar-content h2 {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            margin: 20px 0 12px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 6px;
-        }
-
-        .sidebar-content h2:first-child { margin-top: 0; }
-
-        /* Botón Comprar */
-        .btn-buy {
-            width: 100%;
-            padding: 14px;
-            background-color: var(--accent);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 16px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 0 4px 20px var(--accent-glow);
-        }
-
-        .btn-buy:hover { filter: brightness(1.1); transform: translateY(-1px); }
-        .btn-buy:active { transform: translateY(0); }
-
-        /* Colores avanzados */
-        .advanced-colors { display: none; }
-
-        .material-item {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 8px 12px;
-            margin-bottom: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .material-name {
-            font-size: 13px;
-            font-weight: 500;
-            color: #ccc;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 160px;
-        }
-
-        input[type="color"] {
-            -webkit-appearance: none;
-            appearance: none;
-            border: none;
-            width: 32px; height: 32px;
-            border-radius: 6px;
-            cursor: pointer;
-            padding: 0;
-            background: none;
-        }
-        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
-        input[type="color"]::-webkit-color-swatch {
-            border: 1px solid var(--border);
-            border-radius: 4px;
-        }
-
-        .btn-toggle-colors {
-            width: 100%;
-            background: none;
-            border: 1px dashed var(--border);
-            color: var(--text-muted);
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            margin-top: 10px;
-            transition: all 0.2s;
-        }
-
-        .btn-toggle-colors:hover { color: white; border-color: #555; }
-
-        /* ══════════════════════════════
-           VISOR PRINCIPAL
-        ══════════════════════════════ */
-        .main-view {
-            flex-grow: 1;
-            position: relative;
-            background-image: radial-gradient(circle at center, #1a1d24 0%, #0f1115 100%);
-            overflow: hidden;
-            min-width: 0;
-        }
-
-        .floor-grid {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 50%;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: perspective(500px) rotateX(70deg);
-            transform-origin: bottom center;
-            pointer-events: none;
-            -webkit-mask-image: linear-gradient(to top, black 0%, transparent 100%);
-            mask-image: linear-gradient(to top, black 0%, transparent 100%);
-            z-index: 0;
-        }
-
-        model-viewer {
-            width: 100%;
-            height: 100%;
-            --poster-color: transparent;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Fallback imagen */
-        #mainImageFallback {
-            display: none;
-            width: 100%; height: 100%;
-            object-fit: contain;
-            position: relative;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* Hotspots */
-        .hotspot {
-            display: block;
-            width: 28px; height: 28px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            background-color: var(--accent);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .hotspot:hover { transform: scale(1.2); }
-
-        .hotspot-annotation {
-            background: rgba(0,0,0,0.85);
-            border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            color: #fff;
-            display: block;
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            font-weight: 500;
-            left: calc(100% + 1em);
-            max-width: 200px;
-            padding: 8px 12px;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: max-content;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,255,255,0.1);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .hotspot:hover .hotspot-annotation { opacity: 1; }
-
-        /* Instrucciones – solo desktop */
-        .instructions {
-            position: absolute;
-            top: 16px; left: 16px;
-            background: rgba(0,0,0,0.55);
-            backdrop-filter: blur(8px);
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--text-muted);
-            pointer-events: none;
-            border: 1px solid rgba(255,255,255,0.08);
-            z-index: 10;
-        }
-
-        kbd {
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-            padding: 1px 5px;
-            font-family: monospace;
-            color: #fff;
-        }
-
-        /* Botón Galería */
-        .btn-gallery {
-            position: absolute;
-            top: 16px; right: 16px;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            padding: 10px 18px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            height: 100vh;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: all 0.2s;
-            z-index: 15;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .btn-gallery:hover {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        /* Carrusel */
-        .models-carousel {
-            position: absolute;
-            bottom: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 20;
-            background: rgba(0,0,0,0.65);
-            padding: 10px;
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.08);
-            max-width: calc(100% - 32px);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .models-carousel::-webkit-scrollbar { display: none; }
-
-        .model-thumb {
-            width: 60px; height: 60px;
-            min-width: 60px;
-            border-radius: 8px;
-            border: 2px solid transparent;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.2s;
-            background-color: var(--panel-bg);
-            padding: 0;
-        }
-
-        .model-thumb img { width: 100%; height: 100%; object-fit: cover; }
-
-        .model-thumb:hover { border-color: var(--text-muted); transform: translateY(-4px); }
-
-        .model-thumb.active {
-            border-color: var(--accent);
-            box-shadow: 0 0 14px var(--accent-glow);
-            transform: translateY(-4px);
-        }
-
-        /* ══════════════════════════════
-           MODAL GALERÍA
-        ══════════════════════════════ */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.88);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            display: none;
             justify-content: center;
-            align-items: center;
+            overflow: hidden;
         }
 
-        .modal-overlay.active { display: flex; }
-
-        .modal-content {
-            width: 94%;
-            max-width: 1100px;
-            max-height: 92dvh;
-            background: var(--panel-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border);
+        /* Layout Dividido (Split Screen) */
+        .portfolio-wrapper {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            max-width: 1920px;
+            margin: 0 auto;
             overflow: hidden;
+        }
+
+        /* Lado Izquierdo: Galería Visual */
+        .showcase-section {
+            flex: 6;
+            position: relative;
+            background: radial-gradient(circle at 50% 40%, var(--bg-surface) 0%, var(--bg-base) 100%);
             display: flex;
             flex-direction: column;
-        }
-
-        .modal-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #15171d;
-            flex-shrink: 0;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .btn-close {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 28px;
-            line-height: 1;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 4px;
-            transition: all 0.2s;
-        }
-
-        .btn-close:hover { color: white; background: rgba(255,255,255,0.08); }
-
-        .gallery-grid {
-            padding: 16px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 12px;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            flex-grow: 1;
-        }
-
-        .gallery-item {
-            aspect-ratio: 4/3;
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
-            border: 1px solid var(--border);
+            justify-content: center;
+            padding: 30px;
+            border-right: 1px solid var(--border-color);
+            height: 100vh;
             overflow: hidden;
-            cursor: pointer;
-            transition: all 0.2s;
         }
 
-        .gallery-item:hover {
-            border-color: var(--accent);
+        .main-image-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: calc(100vh - 160px);
+            max-height: none;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 3px solid var(--accent-primary);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 15px var(--accent-glow);
+            background-color: var(--bg-surface-elevated);
+        }
+
+        .main-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: opacity 0.3s ease-in-out, transform 0.5s ease-out;
+            opacity: 1;
+        }
+
+        .main-image-container:hover img {
             transform: scale(1.02);
         }
 
-        .gallery-img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            background: #111;
+        .thumbnail-strip {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 16px;
+            margin-top: 30px;
+            justify-content: flex-start;
+            padding: 10px 10px 20px 10px;
+            max-width: 100%;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-primary) var(--bg-surface-elevated);
         }
 
-        /* Visor imagen completa */
-        .image-viewer {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.97);
-            z-index: 200;
-            display: none;
-            justify-content: center;
-            align-items: center;
+        /* Estilos de barra de desplazamiento (Scroll) para Chrome, Safari y Edge */
+        .thumbnail-strip::-webkit-scrollbar {
+            height: 8px;
         }
-
-        .image-viewer.active { display: flex; }
-
-        .image-viewer img {
-            max-width: 95%;
-            max-height: 95dvh;
-            object-fit: contain;
+        .thumbnail-strip::-webkit-scrollbar-track {
+            background: var(--bg-surface-elevated);
+            border-radius: 4px;
+        }
+        .thumbnail-strip::-webkit-scrollbar-thumb {
+            background-color: var(--accent-primary);
             border-radius: 4px;
         }
 
-        .image-viewer-close {
-            position: absolute;
-            top: 16px; right: 20px;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            font-size: 28px;
-            width: 44px; height: 44px;
-            border-radius: 50%;
+        .thumb-wrap {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            overflow: hidden;
             cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            opacity: 0.6;
+            background-color: var(--bg-surface-elevated);
+            flex-shrink: 0;
+        }
+
+        .thumb-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumb-wrap:hover {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+
+        .thumb-wrap.active {
+            opacity: 1;
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 20px var(--accent-glow);
+            transform: translateY(-5px);
+        }
+
+        /* Lado Derecho: Información del Proyecto */
+        .info-section {
+            flex: 4;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            transition: all 0.2s;
+            padding: 40px 60px;
+            background-color: var(--bg-surface);
+            position: relative;
+            height: 100vh;
+            overflow-y: auto;
         }
 
-        .image-viewer-close:hover { background: var(--accent); border-color: var(--accent); }
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: var(--accent-glow);
+            color: var(--accent-primary);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
 
-        /* ══════════════════════════════
-           BOTÓN HAMBURGUESA (MÓVIL)
-        ══════════════════════════════ */
-        .btn-menu {
-            display: none;
-            position: fixed;
-            bottom: 130px;
-            right: 16px;
-            z-index: 50;
-            width: 48px; height: 48px;
-            border-radius: 50%;
-            background: var(--accent);
-            border: none;
+        h1 {
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .price-tag {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .description {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+        }
+
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .spec-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .spec-value {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            padding: 18px 32px;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 20px var(--accent-glow);
-            transition: all 0.2s;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
         }
 
-        .btn-menu:active { transform: scale(0.92); }
-
-        .btn-menu svg { width: 22px; height: 22px; fill: white; }
-
-        /* Overlay para cerrar sidebar en móvil */
-        .sidebar-backdrop {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.55);
-            z-index: 9;
+        .btn-primary {
+            background-color: var(--accent-primary);
+            color: #000;
+            box-shadow: 0 10px 20px var(--accent-glow);
+            flex-grow: 1;
         }
 
-        .sidebar-backdrop.active { display: block; }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(212, 175, 55, 0.3);
+            background-color: #ebd171;
+        }
 
-        /* ══════════════════════════════
-           RESPONSIVE MÓVIL
-        ══════════════════════════════ */
-        @media (max-width: 768px) {
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
 
-            body { overflow: hidden; }
+        .btn-secondary:hover {
+            background-color: var(--bg-surface-elevated);
+            border-color: var(--text-secondary);
+        }
 
-            .app-container { flex-direction: column; }
-
-            /* El sidebar se vuelve un panel deslizable desde la izquierda */
-            .sidebar {
-                position: fixed;
-                top: 0; left: 0;
-                height: 100%;
-                width: min(320px, 88vw);
-                min-width: unset;
-                z-index: 30;
-                transform: translateX(-105%);
-                border-right: 1px solid var(--border);
+        /* Diseño Responsivo */
+        @media (max-width: 1024px) {
+            body {
+                height: auto;
+                overflow: auto;
+                overflow-x: hidden;
+            }
+            
+            .portfolio-wrapper {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+                overflow: visible;
             }
 
-            .sidebar.open { transform: translateX(0); }
-
-            /* El visor ocupa toda la pantalla */
-            .main-view {
+            .showcase-section {
+                flex: none;
                 width: 100%;
-                height: 100dvh;
+                height: auto;
+                min-height: auto;
+                padding: 20px;
+            }
+            
+            .main-image-container {
+                height: 50vh;
+                max-height: 50vh;
             }
 
-            /* model-viewer deja espacio para el carrusel abajo (96px carrusel + 24px márgenes) */
-            model-viewer {
-                height: calc(100% - 120px) !important;
-                position: absolute;
-                top: 0; left: 0; right: 0;
-            }
-
-            /* Botón hamburguesa encima del carrusel */
-            .btn-menu {
-                display: flex;
-                bottom: 100px;
-            }
-
-            /* Instrucciones escondidas en móvil */
-            .instructions { display: none; }
-
-            /* Botón galería más compacto */
-            .btn-gallery {
-                top: 12px; right: 12px;
-                padding: 9px 14px;
-                font-size: 13px;
-            }
-
-            /* Carrusel pegado al fondo */
-            .models-carousel {
-                bottom: 12px;
-                padding: 8px;
-                gap: 8px;
-                /* Asegurar que quede por encima del área táctil */
-                z-index: 25;
-            }
-
-            .model-thumb {
-                width: 54px; height: 54px;
-                min-width: 54px;
-            }
-
-            /* Galería en móvil: 2 columnas */
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                padding: 12px;
-            }
-
-            /* Modal más alto en móvil */
-            .modal-content {
+            .info-section {
+                flex: none;
                 width: 100%;
-                height: 92dvh;
-                border-radius: 16px 16px 0 0;
-                align-self: flex-end;
+                height: auto;
+                min-height: auto;
+                overflow-y: visible;
+                padding: 40px;
             }
 
-            .modal-overlay {
-                align-items: flex-end;
+            h1 {
+                font-size: 36px;
             }
         }
 
-        @media (max-width: 400px) {
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
+        @media (max-width: 600px) {
+            .main-image-container {
+                height: 40vh;
+                max-height: 40vh;
             }
 
-            .model-thumb {
-                width: 48px; height: 48px;
-                min-width: 48px;
+            .info-section {
+                padding: 30px 20px;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 28px;
             }
         }
     </style>
@@ -625,334 +345,132 @@
 
 <body>
 
-    <!-- Botón hamburguesa para móvil -->
-    <button class="btn-menu" id="btnMenu" aria-label="Abrir menú">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <rect y="4" width="24" height="2.5" rx="1.25"/>
-            <rect y="10.75" width="24" height="2.5" rx="1.25"/>
-            <rect y="17.5" width="24" height="2.5" rx="1.25"/>
-        </svg>
-    </button>
+    <div class="portfolio-wrapper">
 
-    <!-- Overlay para cerrar sidebar -->
-    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+        <!-- SECCIÓN IZQUIERDA: GALERÍA VISUAL (Reemplazo del model-viewer) -->
+        <section class="showcase-section">
+            <div class="main-image-container">
+                <!-- Imagen principal de la torre -->
+                <img id="mainImage" src="fotos/torre1.jpeg" alt="Maqueta Torre Petrolera"
+                    onerror="this.src='https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop'">
+            </div>
 
-    <div class="app-container">
+            <div class="thumbnail-strip">
+                <div class="thumb-wrap active" data-title="Torre Petrolera V1" data-price="$1200.000 COP"
+                    data-desc="Maqueta de exhibición de alta precisión. Diseñada y cortada en láser utilizando madera MDF de primera calidad, y ensamblada a mano cuidando cada detalle estructural. Ideal para exhibiciones corporativas o piezas de colección para ingenieros."
+                    data-dim="21 cm Altura Aprox."
+                    onclick="updateMainImage(this, 'fotos/torre1.jpeg', 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop')">
+                    <img src="fotos/torre1.jpeg" alt="Torre 1">
+                </div>
 
-        <!-- ── PANEL LATERAL ── -->
-        <aside class="sidebar" id="sidebar">
-            <header class="sidebar-header">
-                <h1 id="productTitle">Torre Petrolera Escala</h1>
-                <span class="price-tag" id="productPrice">$200.000</span>
-                <p class="product-desc" id="productDesc">Maqueta de alta precisión cortada en láser y ensamblada a mano en madera MDF. Ideal para exhibiciones corporativas o regalos de la industria.</p>
-            </header>
+                <div class="thumb-wrap" data-title="Máquina de Bombeo (Balancín)" data-price="$250.000 COP"
+                    data-desc="Réplica detallada de una unidad de bombeo mecánico, conocida como balancín. Mecanismo articulado demostrativo en MDF texturizado, perfecto para entender el ciclo de extracción."
+                    data-dim="18 cm Altura Aprox."
+                    onclick="updateMainImage(this, 'fotos/torre 2.jpg', 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop')">
+                    <img src="fotos/torre 2.jpg" alt="Torre 2">
+                </div>
 
-            <div class="sidebar-content">
-                <h2>Detalles Técnicos</h2>
-                <ul id="productDetails" style="font-size:13px;color:#ccc;padding-left:18px;margin-bottom:20px;line-height:1.8;">
-                    <li>Material: MDF de 2.7mm</li>
-                    <li>Altura aprox: 21 cm</li>
-                    <li>Modular: Sí</li>
-                </ul>
+                <div class="thumb-wrap" data-title="Plataforma de Perforación" data-price="$300.000 COP"
+                    data-desc="Estructura compleja de perforación con base ensanchada. Representación fiel a escala para proyectos educativos y salas de exhibición petrolera."
+                    data-dim="30 cm Altura Aprox."
+                    onclick="updateMainImage(this, 'fotos/torre 3.jpg', 'https://images.unsplash.com/photo-1582216892523-a53ed0984dd8?q=80&w=1000&auto=format&fit=crop')">
+                    <img src="fotos/torre 3.jpg" alt="Torre 3">
+                </div>
 
-                <button class="btn-buy" onclick="alert('Aquí puedes poner un link a tu WhatsApp o tienda online.')">
-                    Consultar Pedido
-                </button>
+                <div class="thumb-wrap" data-title="Detalle Estructural" data-price="$180.000 COP"
+                    data-desc="Muestra de la técnica de corte láser y ensamblaje de la torre petrolera. La densidad del MDF garantiza durabilidad y una presentación impecable."
+                    data-dim="Varios Tamaños"
+                    onclick="updateMainImage(this, 'fotos/torre 4.jpg', 'https://images.unsplash.com/photo-1516016149912-3b10bce90dce?q=80&w=1000&auto=format&fit=crop')">
+                    <img src="fotos/torre 4.jpg" alt="Torre 4">
+                </div>
 
-                <h2 style="margin-top:28px;">Ajuste Experto</h2>
-                <button class="btn-toggle-colors" id="btnToggleColors">Personalizar piezas individualmente</button>
-                <div id="materialsPanel" class="advanced-colors">
-                    <p style="padding:10px;font-size:13px;color:var(--text-muted);">Cargando piezas del modelo...</p>
+                <div class="thumb-wrap" data-title="Maqueta Completa Oil & Gas" data-price="$450.000 COP"
+                    data-desc="Kit completo que incluye la torre, tuberías base y máquinas de soporte. La opción premium para un regalo verdaderamente corporativo y representativo del sector."
+                    data-dim="35 cm x 40 cm Base"
+                    onclick="updateMainImage(this, 'fotos/torre 5.jpg', 'https://images.unsplash.com/photo-1516016149912-3b10bce90dce?q=80&w=1000&auto=format&fit=crop')">
+                    <img src="fotos/torre 5.jpg" alt="Torre 5">
                 </div>
             </div>
-        </aside>
+        </section>
 
-        <!-- ── VISOR PRINCIPAL ── -->
-        <main class="main-view">
-            <div class="floor-grid"></div>
+        <!-- SECCIÓN DERECHA: INFORMACIÓN Y DESCRIPCIÓN -->
+        <section class="info-section">
+            <div class="badge">Trabajo Artesanal</div>
 
-            <!-- Botón galería -->
-            <button class="btn-gallery" id="btnOpenGallery">
-                📷 Ver Fotos
-            </button>
+            <h1 id="info-title">Torre Petrolera V1</h1>
+            <span id="info-price" class="price-tag">$200.000 COP</span>
 
-            <!-- Fallback imagen estática -->
-            <img id="mainImageFallback" alt="Imagen del modelo">
+            <p id="info-desc" class="description">
+                Maqueta de exhibición de alta precisión. Diseñada y cortada en láser utilizando madera MDF de primera
+                calidad, y ensamblada a mano cuidando cada detalle estructural. Ideal para exhibiciones corporativas o
+                piezas de colección para ingenieros.
+            </p>
 
-            <model-viewer id="myViewer"
-                src="modelo.glb"
-                alt="Maqueta Torre Petrolera"
-                camera-controls
-                auto-rotate
-                shadow-intensity="1.5"
-                shadow-softness="0.5"
-                exposure="1"
-                environment-image="neutral"
-                interaction-prompt="auto"
-                touch-action="pan-y">
-
-                <button class="hotspot" slot="hotspot-1" data-position="0 0.5 0" data-normal="0 1 0">
-                    <div class="hotspot-annotation">Corona o Bloque Superior</div>
-                </button>
-
-                <button class="hotspot" slot="hotspot-2" data-position="0.2 0.2 0.2" data-normal="1 0 0">
-                    <div class="hotspot-annotation">Estructura de soporte (2.7mm)</div>
-                </button>
-            </model-viewer>
-
-            <!-- Instrucciones (solo desktop) -->
-            <div class="instructions">
-                <kbd>Clic Izq.</kbd> Rotar &nbsp;|&nbsp; <kbd>Clic Der.</kbd> Mover &nbsp;|&nbsp; <kbd>Rueda</kbd> Zoom
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <span class="spec-label">Material Principal</span>
+                    <span class="spec-value">MDF Texturizado 2.7mm</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Dimensiones</span>
+                    <span id="info-dim" class="spec-value">21 cm Altura Aprox.</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Tipo de Ensamble</span>
+                    <span class="spec-value">Modular Preciso</span>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-label">Disponibilidad</span>
+                    <span class="spec-value">Por Encargo</span>
+                </div>
             </div>
 
-            <!-- Carrusel miniaturas -->
-            <div class="models-carousel" id="modelsCarousel"></div>
-        </main>
-    </div>
-
-    <!-- ── MODAL GALERÍA ── -->
-    <div class="modal-overlay" id="galleryModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Catálogo de Maquetas Reales</h2>
-                <button class="btn-close" id="btnCloseGallery" title="Cerrar">&times;</button>
+            <div class="action-buttons">
+                <button class="btn btn-primary"
+                    onclick="alert('Redirigiendo a WhatsApp o Formulario de Contacto...')">Solicitar Cotización</button>
+                <button class="btn btn-secondary"
+                    onclick="alert('Compartiendo enlace del portafolio...')">Compartir</button>
             </div>
-            <div class="gallery-grid" id="galleryGrid"></div>
-        </div>
+        </section>
+
     </div>
 
-    <!-- ── VISOR IMAGEN COMPLETA ── -->
-    <div class="image-viewer" id="imageViewer">
-        <button class="image-viewer-close" id="btnCloseImageViewer" title="Cerrar">&times;</button>
-        <img src="" id="fullSizeImage" alt="Imagen en grande">
-    </div>
-
-    <!-- ══════════ SCRIPTS ══════════ -->
+    <!-- Script para cambiar la imagen central al hacer clic en las miniaturas -->
     <script>
-        /* ── Elementos ── */
-        const modelViewer      = document.querySelector('#myViewer');
-        const mainImageFallback = document.getElementById('mainImageFallback');
-        const materialsPanel   = document.querySelector('#materialsPanel');
-        const btnToggleColors  = document.querySelector('#btnToggleColors');
-        const modelsCarousel   = document.getElementById('modelsCarousel');
-        const productTitle     = document.getElementById('productTitle');
-        const productPrice     = document.getElementById('productPrice');
-        const productDesc      = document.getElementById('productDesc');
-        const productDetails   = document.getElementById('productDetails');
+        function updateMainImage(thumbElement, localSrc, fallbackSrc) {
+            const mainImg = document.getElementById('mainImage');
 
-        const btnOpenGallery      = document.getElementById('btnOpenGallery');
-        const btnCloseGallery     = document.getElementById('btnCloseGallery');
-        const galleryModal        = document.getElementById('galleryModal');
-        const galleryGrid         = document.getElementById('galleryGrid');
-        const imageViewer         = document.getElementById('imageViewer');
-        const btnCloseImageViewer = document.getElementById('btnCloseImageViewer');
-        const fullSizeImage       = document.getElementById('fullSizeImage');
+            // Actualizar textos dinámicos
+            const title = thumbElement.getAttribute('data-title');
+            const price = thumbElement.getAttribute('data-price');
+            const desc = thumbElement.getAttribute('data-desc');
+            const dim = thumbElement.getAttribute('data-dim');
 
-        const sidebar         = document.getElementById('sidebar');
-        const btnMenu         = document.getElementById('btnMenu');
-        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+            if (title) document.getElementById('info-title').textContent = title;
+            if (price) document.getElementById('info-price').textContent = price;
+            if (desc) document.getElementById('info-desc').textContent = desc;
+            if (dim) document.getElementById('info-dim').textContent = dim;
 
-        /* ── Sidebar móvil ── */
-        function openSidebar() {
-            sidebar.classList.add('open');
-            sidebarBackdrop.classList.add('active');
+            // Efecto de desvanecimiento
+            mainImg.style.opacity = '0';
+
+            setTimeout(() => {
+                // Actualizar la ruta. Usa fallback en caso de error
+                mainImg.src = localSrc;
+                mainImg.onerror = function () {
+                    this.src = fallbackSrc;
+                };
+
+                // Mostrar de nuevo
+                mainImg.style.opacity = '1';
+            }, 300); // 300ms debe coincidir con la transición en CSS
+
+            // Actualizar estado 'activo' de las miniaturas
+            const thumbs = document.querySelectorAll('.thumb-wrap');
+            thumbs.forEach(thumb => thumb.classList.remove('active'));
+            thumbElement.classList.add('active');
         }
-
-        function closeSidebar() {
-            sidebar.classList.remove('open');
-            sidebarBackdrop.classList.remove('active');
-        }
-
-        btnMenu.addEventListener('click', () => {
-            sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
-        });
-
-        sidebarBackdrop.addEventListener('click', closeSidebar);
-
-        /* ── Fotos galería ── */
-        const misFotos = [
-            "torre1.jpeg","torre 2.jpg","torre 3.jpg","torre 4.jpg","torre 5.jpg",
-            "torre 6.jpg","torre 7.jpg","torre 8.jpg","torre 9.jpg","torre 10.jpg",
-            "torre 11.jpg","torre 12.jpg","torre 13.jpg","torre 14.jpg","torre 15.jpg",
-            "torre 16.jpg","torre 17.jpg","torre 18.jpg","torre 19.jpg","torre 20.jpg",
-            "torre 21.jpg","torre 22.jpg","torre 23.jpg","torre 24.jpg",
-            "Base de torre 1.jpg","Base de torre 2.jpg","Base de torre 3.jpg",
-            "Base de torre 4.jpg","Base de torre 5.jpg","drawworks_schematic.png"
-        ];
-
-        misFotos.forEach(foto => {
-            const item = document.createElement('div');
-            item.className = 'gallery-item';
-            const img = document.createElement('img');
-            img.src = "fotos/" + foto;
-            img.className = 'gallery-img';
-            img.alt = foto;
-            img.loading = 'lazy';
-            item.appendChild(img);
-            item.addEventListener('click', () => {
-                fullSizeImage.src = img.src;
-                imageViewer.classList.add('active');
-            });
-            galleryGrid.appendChild(item);
-        });
-
-        /* ── Galería modal ── */
-        btnOpenGallery.addEventListener('click', () => galleryModal.classList.add('active'));
-        btnCloseGallery.addEventListener('click', () => galleryModal.classList.remove('active'));
-        galleryModal.addEventListener('click', e => { if (e.target === galleryModal) galleryModal.classList.remove('active'); });
-
-        /* ── Visor imagen completa ── */
-        btnCloseImageViewer.addEventListener('click', () => {
-            imageViewer.classList.remove('active');
-            setTimeout(() => { fullSizeImage.src = ''; }, 300);
-        });
-
-        imageViewer.addEventListener('click', e => {
-            if (e.target === imageViewer) {
-                imageViewer.classList.remove('active');
-                setTimeout(() => { fullSizeImage.src = ''; }, 300);
-            }
-        });
-
-        /* ── Colores avanzados ── */
-        btnToggleColors.addEventListener('click', () => {
-            const visible = materialsPanel.style.display === 'block';
-            materialsPanel.style.display = visible ? 'none' : 'block';
-            btnToggleColors.textContent = visible ? 'Personalizar piezas individualmente' : 'Ocultar personalización';
-        });
-
-        function hexToRgba(hex) {
-            const r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return r ? [parseInt(r[1],16)/255, parseInt(r[2],16)/255, parseInt(r[3],16)/255, 1.0] : null;
-        }
-
-        modelViewer.addEventListener('load', () => {
-            if (!modelViewer.model) return;
-            const materials = modelViewer.model.materials;
-            if (!materials?.length) return;
-
-            materialsPanel.innerHTML = '';
-            materials.forEach((material, index) => {
-                let name = (material.name || `Pieza ${index + 1}`).replace('Material_','').replace('.001','');
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'material-item';
-
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'material-name';
-                nameSpan.textContent = name;
-
-                const colorInput = document.createElement('input');
-                colorInput.type = 'color';
-                colorInput.value = '#dcb382';
-                colorInput.addEventListener('input', e => {
-                    material.pbrMetallicRoughness.setBaseColorFactor(hexToRgba(e.target.value));
-                });
-
-                itemDiv.appendChild(nameSpan);
-                itemDiv.appendChild(colorInput);
-                materialsPanel.appendChild(itemDiv);
-            });
-        });
-
-        /* ── Catálogo de modelos ── */
-        const catalog = [
-            {
-                id: 'torre',
-                title: 'Torre Petrolera Escala',
-                price: '$200.000',
-                desc: 'Maqueta de alta precisión cortada en láser y ensamblada a mano en madera MDF.',
-                details: ['Material: MDF de 2.7mm', 'Altura aprox: 21 cm', 'Modular: Sí'],
-                src: 'modelo.glb',
-                thumb: 'articulos/art1.png'
-            },
-            {
-                id: 'ejemplo1',
-                title: 'Soporte Industrial',
-                price: '$85.000',
-                desc: 'Base de estructura secundaria.',
-                details: ['Material: MDF de 4mm', 'Alta resistencia', 'Fácil armado'],
-                src: '',
-                thumb: 'articulos/art2.png'
-            },
-            {
-                id: 'ejemplo2',
-                title: 'Catapulta MDF',
-                price: '$150.000',
-                desc: 'Maqueta interactiva con movilidad funcional.',
-                details: ['Material: MDF', 'Interactiva', 'Movilidad funcional'],
-                src: '',
-                thumb: 'articulos/art3.png'
-            },
-            {
-                id: 'ejemplo3',
-                title: 'Torre Serie II',
-                price: '$250.000',
-                desc: 'Otra maqueta torre en MDF.',
-                details: ['Material: MDF', 'Interactiva', 'Movilidad funcional'],
-                src: '',
-                thumb: 'fotos/torre 2.jpg'
-            }
-        ];
-
-        let currentProductId = null;
-
-        function loadModelData(product) {
-            productTitle.textContent = product.title;
-            productPrice.textContent = product.price;
-            productDesc.textContent  = product.desc;
-
-            productDetails.innerHTML = '';
-            product.details.forEach(d => {
-                const li = document.createElement('li');
-                li.textContent = d;
-                productDetails.appendChild(li);
-            });
-
-            // Solo recargar el modelo si cambió el producto
-            if (product.id !== currentProductId) {
-                currentProductId = product.id;
-                if (product.src) {
-                    modelViewer.src = product.src;
-                    modelViewer.style.display = 'block';
-                    mainImageFallback.style.display = 'none';
-                } else {
-                    modelViewer.src = '';
-                    modelViewer.style.display = 'none';
-                    mainImageFallback.src = product.thumb;
-                    mainImageFallback.style.display = 'block';
-                }
-                materialsPanel.style.display = 'none';
-                btnToggleColors.textContent = 'Personalizar piezas individualmente';
-            }
-
-            // En móvil, cerrar el sidebar al seleccionar producto
-            if (window.innerWidth <= 768) closeSidebar();
-        }
-
-        catalog.forEach((item, index) => {
-            const btn = document.createElement('button');
-            btn.className = 'model-thumb' + (index === 0 ? ' active' : '');
-            btn.innerHTML = `<img src="${item.thumb}" alt="${item.title}" title="${item.title}" loading="lazy">`;
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.model-thumb').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                loadModelData(item);
-            });
-            modelsCarousel.appendChild(btn);
-        });
-
-        if (catalog.length > 0) loadModelData(catalog[0]);
-
-        /* Debug hotspots (consola) */
-        modelViewer.addEventListener('click', event => {
-            try {
-                if (typeof modelViewer.positionAndNormalFromPoint !== 'function') return;
-                const hit = modelViewer.positionAndNormalFromPoint(event.clientX, event.clientY);
-                if (hit) {
-                    console.log(`data-position="${hit.position}" data-normal="${hit.normal}"`);
-                }
-            } catch(e) { /* ignorar */ }
-        });
     </script>
 </body>
+
 </html>
