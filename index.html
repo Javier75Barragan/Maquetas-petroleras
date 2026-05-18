@@ -755,9 +755,10 @@ Coleccionistas y apasionados de la industria petrolera y de perforación</p>
             </div>
             
             <div class="modal-filters">
-                <button class="filter-btn active" onclick="filterGallery('all', this)">Todos</button>
-                <button class="filter-btn" onclick="filterGallery('image', this)">Maquetas</button>
-                <button class="filter-btn" onclick="filterGallery('video', this)">Videos en Acción</button>
+                <button class="filter-btn active" onclick="filterGallery('maquetas', this)">Maquetas</button>
+                <button class="filter-btn" onclick="filterGallery('videos', this)">Videos</button>
+                <button class="filter-btn" onclick="filterGallery('machines', this)">Machines</button>
+                <button class="filter-btn" onclick="filterGallery('accesorios', this)">Accesorios</button>
             </div>
             
             <div class="grid-container" id="modalGridContainer">
@@ -837,14 +838,29 @@ Coleccionistas y apasionados de la industria petrolera y de perforación`;
             strip.appendChild(moreBtn);
         }
 
+        // Función para determinar la categoría según el nombre del archivo o tipo
+        function getCategory(item) {
+            const src = (item.src || '').toLowerCase();
+            const type = (item.type || '').toLowerCase();
+            if (src.includes('torre')) {
+                return 'maquetas';
+            } else if (src.includes('video') || type === 'video' || src.endsWith('.mp4')) {
+                return 'videos';
+            } else if (src.includes('machin')) {
+                return 'machines';
+            } else if (src.includes('acceso')) {
+                return 'accesorios';
+            }
+            return type === 'video' ? 'videos' : 'maquetas';
+        }
+
         // Renderizar el modal con todas las fotos y videos
-        function renderModalGrid(filter = 'all') {
+        function renderModalGrid(filter = 'maquetas') {
             const grid = document.getElementById('modalGridContainer');
             grid.innerHTML = '';
 
             const filtered = maquetas.filter(item => {
-                if (filter === 'all') return true;
-                return item.type === filter;
+                return getCategory(item) === filter;
             });
 
             filtered.forEach(item => {
@@ -933,7 +949,7 @@ Coleccionistas y apasionados de la industria petrolera y de perforación`;
         function toggleModal(show) {
             const modal = document.getElementById('galleryModal');
             if (show) {
-                renderModalGrid('all');
+                renderModalGrid('maquetas');
                 // Resetear botones de filtro del modal
                 const filterBtns = document.querySelectorAll('.filter-btn');
                 filterBtns.forEach(btn => btn.classList.remove('active'));
