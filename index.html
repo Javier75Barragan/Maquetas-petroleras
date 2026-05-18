@@ -72,7 +72,9 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            height: calc(100vh - 160px);
+            max-width: 520px; /* Limita el ancho para coincidir con la proporción vertical del teléfono */
+            margin: 0 auto; /* Centra el contenedor en el lado izquierdo */
+            height: calc(100vh - 180px);
             max-height: none;
             position: relative;
             overflow: hidden;
@@ -98,10 +100,11 @@
             display: flex;
             flex-wrap: nowrap;
             gap: 16px;
-            margin-top: 30px;
+            margin: 30px auto 0 auto; /* Centra y alinea perfectamente con la imagen principal */
             justify-content: flex-start;
             padding: 10px 10px 20px 10px;
-            max-width: 100%;
+            max-width: 520px; /* Alineación perfecta con el contenedor principal */
+            width: 100%;
             overflow-x: auto;
             scrollbar-width: thin;
             scrollbar-color: var(--accent-primary) var(--bg-surface-elevated);
@@ -158,8 +161,8 @@
             flex: 4;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            padding: 40px 60px;
+            justify-content: flex-start; /* Permite una lectura fluida de textos largos de arriba a abajo */
+            padding: 50px 40px; /* Incrementa el espacio superior y reduce márgenes laterales para mayor elegancia */
             background-color: var(--bg-surface);
             position: relative;
             height: 100vh;
@@ -205,6 +208,7 @@
             color: var(--text-secondary);
             margin-bottom: 30px;
             max-width: 500px;
+            white-space: pre-wrap;
         }
 
         .specs-grid {
@@ -237,46 +241,356 @@
             color: var(--text-primary);
         }
 
-        .action-buttons {
+        .contact-card {
+            background: linear-gradient(135deg, var(--bg-surface-elevated) 0%, rgba(20, 27, 41, 0.9) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .contact-card-header {
             display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--accent-primary);
+        }
+
+        .contact-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-primary);
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
             gap: 16px;
         }
 
-        .btn {
-            padding: 18px 32px;
-            border-radius: 8px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .contact-label {
+            font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border: none;
+            color: var(--text-secondary);
+            font-weight: 600;
         }
 
-        .btn-primary {
-            background-color: var(--accent-primary);
-            color: #000;
-            box-shadow: 0 10px 20px var(--accent-glow);
-            flex-grow: 1;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 25px rgba(212, 175, 55, 0.3);
-            background-color: #ebd171;
-        }
-
-        .btn-secondary {
-            background-color: transparent;
+        .contact-value {
+            font-size: 15px;
             color: var(--text-primary);
-            border: 1px solid var(--border-color);
+            font-weight: 500;
         }
 
-        .btn-secondary:hover {
+        .contact-value.highlight {
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: fit-content;
+        }
+
+        .contact-link:hover {
+            color: #ebd171;
+            transform: translateX(4px);
+        }
+
+        .phone-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* --- SOPORTE VIDEO Y GALERÍA COMPLETA MODAL --- */
+        .thumb-wrap {
+            position: relative;
+        }
+
+        /* Indicador de video en miniatura */
+        .thumb-video-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(6, 14, 24, 0.75);
+            border: 1.5px solid var(--accent-primary);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .thumb-wrap:hover .thumb-video-badge {
+            background: var(--accent-primary);
+            color: #000;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* Botón de Ver Más Miniaturas */
+        .thumb-more-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--bg-surface-elevated) 0%, var(--bg-base) 100%) !important;
+            border: 2px dashed var(--accent-primary) !important;
+            color: var(--accent-primary) !important;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px !important;
+            opacity: 0.8 !important;
+        }
+
+        .thumb-more-btn:hover {
+            opacity: 1 !important;
+            background: var(--accent-glow) !important;
+            transform: translateY(-5px);
+        }
+
+        .thumb-more-btn svg {
+            margin-bottom: 4px;
+            stroke: currentColor;
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Modal de Galería Completa (Glassmorphic) */
+        .gallery-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(6, 14, 24, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 20px;
+        }
+
+        .gallery-modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 950px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.15);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(10, 22, 38, 0.5);
+        }
+
+        .modal-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 28px;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
             background-color: var(--bg-surface-elevated);
-            border-color: var(--text-secondary);
+            color: var(--accent-primary);
+        }
+
+        .modal-filters {
+            display: flex;
+            gap: 10px;
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .modal-filters::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 30px;
+            background: var(--bg-surface-elevated);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent-glow);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .grid-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-primary) var(--bg-surface-elevated);
+        }
+
+        .grid-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .grid-container::-webkit-scrollbar-track {
+            background: var(--bg-surface-elevated);
+        }
+
+        .grid-container::-webkit-scrollbar-thumb {
+            background-color: var(--accent-primary);
+            border-radius: 3px;
+        }
+
+        .grid-item {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* Truco de proporción 1:1 ultra-estable */
+            height: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--bg-surface-elevated);
+            opacity: 0.85;
+        }
+
+        .grid-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .grid-item .thumb-video-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(6, 14, 24, 0.75);
+            border: 1.5px solid var(--accent-primary);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .grid-item:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-4px);
+            opacity: 1;
+        }
+
+        .grid-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .grid-item.active {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 15px var(--accent-glow);
+            opacity: 1;
         }
 
         /* Diseño Responsivo */
@@ -354,45 +668,14 @@
         <section class="showcase-section">
             <div class="main-image-container">
                 <!-- Imagen principal de la torre -->
-                <img id="mainImage" src="fotos/Torre 1.jpeg" alt="Maqueta Torre Petrolera"
+                <img id="mainImage" src="fotos/Torre 11.jpeg" alt="Maqueta Torre Petrolera"
                     onerror="this.src='https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop'">
+                <!-- Video principal para demostraciones en movimiento (Playsinline es clave en móviles!) -->
+                <video id="mainVideo" style="display: none; width: 100%; height: 100%; object-fit: contain; outline: none; border-radius: 8px;" autoplay muted loop playsinline controls></video>
             </div>
 
-            <div class="thumbnail-strip">
-                <div class="thumb-wrap active" data-title="Torre Petrolera V1" data-price="$1200.000 COP"
-                    data-desc="Maqueta de exhibición de alta precisión. Diseñada y cortada en láser utilizando madera MDF de primera calidad, y ensamblada a mano cuidando cada detalle estructural. Ideal para exhibiciones corporativas o piezas de colección para ingenieros."
-                    data-dim="21 cm Altura Aprox."
-                    onclick="updateMainImage(this, 'fotos/Torre 1.jpeg', 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop')">
-                    <img src="fotos/Torre 1.jpeg" alt="Torre 1">
-                </div>
-
-                <div class="thumb-wrap" data-title="Máquina de Bombeo (Balancín)" data-price="$250.000 COP"
-                    data-desc="Réplica detallada de una unidad de bombeo mecánico, conocida como balancín. Mecanismo articulado demostrativo en MDF texturizado, perfecto para entender el ciclo de extracción."
-                    data-dim="18 cm Altura Aprox."
-                    onclick="updateMainImage(this, 'fotos/Torre 2.jpeg', 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop')">
-                    <img src="fotos/Torre 2.jpeg" alt="Torre 2">
-                </div>
-
-                <div class="thumb-wrap" data-title="Plataforma de Perforación" data-price="$300.000 COP"
-                    data-desc="Estructura compleja de perforación con base ensanchada. Representación fiel a escala para proyectos educativos y salas de exhibición petrolera."
-                    data-dim="30 cm Altura Aprox."
-                    onclick="updateMainImage(this, 'fotos/Torre 3.jpeg', 'https://images.unsplash.com/photo-1582216892523-a53ed0984dd8?q=80&w=1000&auto=format&fit=crop')">
-                    <img src="fotos/Torre 3.jpeg" alt="Torre 3">
-                </div>
-
-                <div class="thumb-wrap" data-title="Detalle Estructural" data-price="$180.000 COP"
-                    data-desc="Muestra de la técnica de corte láser y ensamblaje de la torre petrolera. La densidad del MDF garantiza durabilidad y una presentación impecable."
-                    data-dim="Varios Tamaños"
-                    onclick="updateMainImage(this, 'fotos/Torre 4.jpeg', 'https://images.unsplash.com/photo-1516016149912-3b10bce90dce?q=80&w=1000&auto=format&fit=crop')">
-                    <img src="fotos/Torre 4.jpeg" alt="Torre 4">
-                </div>
-
-                <div class="thumb-wrap" data-title="Maqueta Completa Oil & Gas" data-price="$450.000 COP"
-                    data-desc="Kit completo que incluye la torre, tuberías base y máquinas de soporte. La opción premium para un regalo verdaderamente corporativo y representativo del sector."
-                    data-dim="35 cm x 40 cm Base"
-                    onclick="updateMainImage(this, 'fotos/Torre 5.jpeg', 'https://images.unsplash.com/photo-1516016149912-3b10bce90dce?q=80&w=1000&auto=format&fit=crop')">
-                    <img src="fotos/Torre 5.jpeg" alt="Torre 5">
-                </div>
+            <div class="thumbnail-strip" id="thumbnailStrip">
+                <!-- Se genera dinámicamente con JS -->
             </div>
         </section>
 
@@ -400,14 +683,17 @@
         <section class="info-section">
             <div class="badge">Trabajo Artesanal</div>
 
-            <h1 id="info-title">Torre Petrolera V1</h1>
-            <span id="info-price" class="price-tag">$200.000 COP</span>
+            <h1 id="info-title">Maqueta de perforación de alta precisión</h1>
+            <span id="info-price" class="price-tag">$1.100.100 COP</span>
 
-            <p id="info-desc" class="description">
-                Maqueta de exhibición de alta precisión. Diseñada y cortada en láser utilizando madera MDF de primera
-                calidad, y ensamblada a mano cuidando cada detalle estructural. Ideal para exhibiciones corporativas o
-                piezas de colección para ingenieros.
-            </p>
+            <p id="info-desc" class="description">Maqueta de alta precisión fabricada en madera MDF de primera calidad mediante corte láser y ensamblada a mano. Una pieza de exhibición premium, realista y de gran impacto visual, ideal para entornos corporativos.
+
+Ideal para:
+
+Exhibiciones corporativas y stands industriales
+Oficinas de ingeniería y energía
+Regalos ejecutivos especializados
+Coleccionistas y apasionados de la industria petrolera y de perforación</p>
 
             <div class="specs-grid">
                 <div class="spec-item">
@@ -416,11 +702,7 @@
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Dimensiones</span>
-                    <span id="info-dim" class="spec-value">21 cm Altura Aprox.</span>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-label">Tipo de Ensamble</span>
-                    <span class="spec-value">Modular Preciso</span>
+                    <span id="info-dim" class="spec-value">63 cm de altura, base 19 x 20 cm</span>
                 </div>
                 <div class="spec-item">
                     <span class="spec-label">Disponibilidad</span>
@@ -428,51 +710,252 @@
                 </div>
             </div>
 
-            <div class="action-buttons">
-                <button class="btn btn-primary"
-                    onclick="alert('Redirigiendo a WhatsApp o Formulario de Contacto...')">Solicitar Cotización</button>
-                <button class="btn btn-secondary"
-                    onclick="alert('Compartiendo enlace del portafolio...')">Compartir</button>
+            <div class="contact-card">
+                <div class="contact-card-header">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                    </svg>
+                    <span class="contact-title">Contacto de Ingeniería</span>
+                </div>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <span class="contact-label">Contacto</span>
+                        <span class="contact-value highlight">Ing. Javier Barragán Ferreira</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Celular</span>
+                        <a href="https://wa.me/573155432975?text=Hola,%20estoy%20interesado%20en%20una%20maqueta%20de%20perforación" target="_blank" class="contact-link">
+                            <svg class="phone-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.73-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.688 2.019 14.218 1.002 12.01 1.002c-5.448 0-9.879 4.373-9.883 9.802-.001 1.942.508 3.84 1.47 5.517L2.617 21.06l4.908-1.288.122-.078z"/>
+                            </svg>
+                            315 543 2975
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Ubicación</span>
+                        <span class="contact-value">Barrancabermeja - Santander</span>
+                    </div>
+                </div>
             </div>
         </section>
 
     </div>
 
-    <!-- Script para cambiar la imagen central al hacer clic en las miniaturas -->
+    <!-- MODAL DE GALERÍA COMPLETA (GLASSMORPHIC & MOBILE OPTIMIZED) -->
+    <div class="gallery-modal" id="galleryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Catálogo de Modelos & Videos</h2>
+                <button class="close-btn" onclick="toggleModal(false)">&times;</button>
+            </div>
+            
+            <div class="modal-filters">
+                <button class="filter-btn active" onclick="filterGallery('all', this)">Todos</button>
+                <button class="filter-btn" onclick="filterGallery('image', this)">Maquetas</button>
+                <button class="filter-btn" onclick="filterGallery('video', this)">Videos en Acción</button>
+            </div>
+            
+            <div class="grid-container" id="modalGridContainer">
+                <!-- Se genera dinámicamente con JS -->
+            </div>
+     <!-- Script para Galería Dinámica y Adaptabilidad Móvil -->
     <script>
-        function updateMainImage(thumbElement, localSrc, fallbackSrc) {
-            const mainImg = document.getElementById('mainImage');
+        // Catálogo de maquetas (limitado a exactamente 10 maquetas y 3 videos)
+        const DESCRIPCION_ESTANDAR = `Maqueta de alta precisión fabricada en madera MDF de primera calidad mediante corte láser y ensamblada a mano. Una pieza de exhibición premium, realista y de gran impacto visual, ideal para entornos corporativos.
 
-            // Actualizar textos dinámicos
-            const title = thumbElement.getAttribute('data-title');
-            const price = thumbElement.getAttribute('data-price');
-            const desc = thumbElement.getAttribute('data-desc');
-            const dim = thumbElement.getAttribute('data-dim');
+Ideal para:
 
-            if (title) document.getElementById('info-title').textContent = title;
-            if (price) document.getElementById('info-price').textContent = price;
-            if (desc) document.getElementById('info-desc').textContent = desc;
-            if (dim) document.getElementById('info-dim').textContent = dim;
+Exhibiciones corporativas y stands industriales
+Oficinas de ingeniería y energía
+Regalos ejecutivos especializados
+Coleccionistas y apasionados de la industria petrolera y de perforación`;
 
-            // Efecto de desvanecimiento
-            mainImg.style.opacity = '0';
+        const maquetas = [
+            { id: 11, type: 'image', src: 'fotos/Torre 11.jpeg', fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop', title: 'Maqueta de perforación de alta precisión', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
+            { id: 14, type: 'image', src: 'fotos/Torre 14.jpeg', fallback: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop', title: 'Maqueta de perforación de alta precisión', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
+            { id: 15, type: 'image', src: 'fotos/Torre 15.jpeg', fallback: 'https://images.unsplash.com/photo-1582216892523-a53ed0984dd8?q=80&w=1000&auto=format&fit=crop', title: 'Maqueta de perforación de alta precisión', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
+            { id: 21, type: 'image', src: 'fotos/Torre 21.jpeg', fallback: 'https://images.unsplash.com/photo-1516016149912-3b10bce90dce?q=80&w=1000&auto=format&fit=crop', title: 'Maqueta de perforación de alta precisión', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
+            { id: 23, type: 'image', src: 'fotos/Torre 23.jpeg', fallback: 'https://images.unsplash.com/photo-1516016149912-3b10bce90dce?q=80&w=1000&auto=format&fit=crop', title: 'Maqueta de perforación de alta precisión', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
+            { id: 24, type: 'image', src: 'fotos/Torre 24.jpeg', fallback: 'https://images.unsplash.com/photo-1516016149912-3b10bce90dce?q=80&w=1000&auto=format&fit=crop', title: 'Maqueta de perforación de alta precisión', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
+            { id: 28, type: 'image', src: 'fotos/Torre 28.jpeg', fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop', title: 'Maqueta de perforación de alta precisión', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
+            { id: 31, type: 'image', src: 'fotos/Torre 31.jpeg', fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop', title: 'Maqueta de perforación de alta precisión', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
+            { id: 37, type: 'image', src: 'fotos/Torre 37.jpeg', fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop', title: 'Maqueta de perforación de alta precisión', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
+            { id: 39, type: 'image', src: 'fotos/Torre 39.jpeg', fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop', title: 'Maqueta de perforación de alta precisión', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' }
+        ];
 
-            setTimeout(() => {
-                // Actualizar la ruta. Usa fallback en caso de error
-                mainImg.src = localSrc;
-                mainImg.onerror = function () {
-                    this.src = fallbackSrc;
+        // Agregar exactamente los 3 videos (.mp4)
+        maquetas.push(
+            { id: 41, type: 'video', src: 'fotos/Torre 41.mp4', fallback: '', title: 'Balancín en Movimiento Real', price: 'Video Demostrativo', desc: 'Demostración en video de la mecánica de movimiento realista y flujo operativo de la maqueta del balancín.', dim: 'Video Demostrativo' },
+            { id: 42, type: 'video', src: 'fotos/Torre 42.mp4', fallback: '', title: 'Ciclo de Bombeo Mecánico', price: 'Video Demostrativo', desc: 'Foco detallado en las uniones mecánicas, engranajes y la suavidad del recorrido de bombeo articulado.', dim: 'Video Demostrativo' },
+            { id: 43, type: 'video', src: 'fotos/Torre 43.mp4', fallback: '', title: 'Presentación y Acabados de la Torre', price: 'Video Demostrativo', desc: 'Video en alta resolución que resalta las texturas del MDF, la simetría del corte láser y la estabilidad general.', dim: 'Video Demostrativo' }
+        );
+
+        // Renderizar miniaturas de la tira horizontal (primeras 6 + botón Ver Más)
+        function renderThumbnailStrip() {
+            const strip = document.getElementById('thumbnailStrip');
+            strip.innerHTML = '';
+
+            // Tomamos las primeras 6 maquetas destacadas
+            const featured = maquetas.slice(0, 6);
+
+            featured.forEach((item, index) => {
+                const thumb = document.createElement('div');
+                thumb.className = `thumb-wrap ${index === 0 ? 'active' : ''}`;
+                thumb.onclick = () => selectItem(item, thumb);
+
+                // Si es video, usamos una miniatura alternativa o el primer video con un badge
+                if (item.type === 'video') {
+                    thumb.innerHTML = `
+                        <img src="fotos/Torre 2.jpeg" alt="${item.title}">
+                        <div class="thumb-video-badge">
+                            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                        </div>
+                    `;
+                } else {
+                    thumb.innerHTML = `<img src="${item.src}" alt="${item.title}" onerror="this.src='${item.fallback}'">`;
+                }
+                
+                strip.appendChild(thumb);
+            });
+
+            // Botón de "+ Ver Todas" al final de la tira
+            const moreBtn = document.createElement('div');
+            moreBtn.className = 'thumb-wrap thumb-more-btn';
+            moreBtn.onclick = () => toggleModal(true);
+            moreBtn.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Ver Más (${maquetas.length})</span>
+            `;
+            strip.appendChild(moreBtn);
+        }
+
+        // Renderizar el modal con todas las fotos y videos
+        function renderModalGrid(filter = 'all') {
+            const grid = document.getElementById('modalGridContainer');
+            grid.innerHTML = '';
+
+            const filtered = maquetas.filter(item => {
+                if (filter === 'all') return true;
+                return item.type === filter;
+            });
+
+            filtered.forEach(item => {
+                const gridItem = document.createElement('div');
+                const activeItem = document.getElementById('info-title').textContent === item.title;
+                gridItem.className = `grid-item ${activeItem ? 'active' : ''}`;
+                gridItem.onclick = () => {
+                    selectItem(item);
+                    toggleModal(false);
                 };
 
-                // Mostrar de nuevo
-                mainImg.style.opacity = '1';
-            }, 300); // 300ms debe coincidir con la transición en CSS
+                if (item.type === 'video') {
+                    gridItem.innerHTML = `
+                        <img src="fotos/Torre 2.jpeg" alt="${item.title}">
+                        <div class="thumb-video-badge">
+                            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                        </div>
+                    `;
+                } else {
+                    gridItem.innerHTML = `<img src="${item.src}" alt="${item.title}" onerror="this.src='${item.fallback}'">`;
+                }
 
-            // Actualizar estado 'activo' de las miniaturas
-            const thumbs = document.querySelectorAll('.thumb-wrap');
-            thumbs.forEach(thumb => thumb.classList.remove('active'));
-            thumbElement.classList.add('active');
+                grid.appendChild(gridItem);
+            });
         }
+
+        // Seleccionar un ítem de la galería (Foto o Video)
+        function selectItem(item, thumbElement = null) {
+            const mainImg = document.getElementById('mainImage');
+            const mainVid = document.getElementById('mainVideo');
+
+            // Actualizar textos dinámicos
+            document.getElementById('info-title').textContent = item.title;
+            document.getElementById('info-price').textContent = item.price;
+            document.getElementById('info-desc').textContent = item.desc;
+            document.getElementById('info-dim').textContent = item.dim;
+
+            // Manejo de visibilidad y fuente de Foto vs Video
+            if (item.type === 'video') {
+                // Transición desvanecida
+                mainImg.style.opacity = '0';
+                mainVid.style.opacity = '0';
+
+                setTimeout(() => {
+                    mainImg.style.display = 'none';
+                    mainVid.style.display = 'block';
+                    mainVid.src = item.src;
+                    mainVid.style.opacity = '1';
+                }, 300);
+            } else {
+                mainImg.style.opacity = '0';
+                mainVid.style.opacity = '0';
+
+                setTimeout(() => {
+                    mainVid.style.display = 'none';
+                    mainVid.pause();
+                    mainImg.style.display = 'block';
+                    mainImg.src = item.src;
+                    mainImg.onerror = function() {
+                        this.src = item.fallback;
+                    };
+                    mainImg.style.opacity = '1';
+                }, 300);
+            }
+
+            // Si se pasa el elemento miniatura directamente, actualizar la clase activa en la tira
+            if (thumbElement) {
+                const thumbs = document.querySelectorAll('.thumb-wrap');
+                thumbs.forEach(t => t.classList.remove('active'));
+                thumbElement.classList.add('active');
+            } else {
+                // Si viene del modal, buscar en la tira si coincide el src y activarlo
+                const thumbs = document.querySelectorAll('.thumb-wrap');
+                thumbs.forEach(t => {
+                    const img = t.querySelector('img');
+                    if (img && img.getAttribute('src') === item.src) {
+                        t.classList.add('active');
+                    } else {
+                        t.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Abrir/Cerrar Modal
+        function toggleModal(show) {
+            const modal = document.getElementById('galleryModal');
+            if (show) {
+                renderModalGrid('all');
+                // Resetear botones de filtro del modal
+                const filterBtns = document.querySelectorAll('.filter-btn');
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                filterBtns[0].classList.add('active');
+                
+                modal.classList.add('show');
+            } else {
+                modal.classList.remove('show');
+            }
+        }
+
+        // Filtrar galería dentro del modal
+        function filterGallery(type, buttonElement) {
+            // Actualizar clase activa del botón
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+
+            // Renderizar con filtro
+            renderModalGrid(type);
+        }
+
+        // Inicializar galería
+        window.addEventListener('DOMContentLoaded', () => {
+            renderThumbnailStrip();
+        });
     </script>
 </body>
 
