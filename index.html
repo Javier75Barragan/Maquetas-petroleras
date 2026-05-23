@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Torres Petroleras y Máquinas de Bombeo | Portfolio Premium</title>
 
+    <!-- Meta tags para compartir (Open Graph) -->
+  
+    <meta property="og:url" content="https://bafer-one.github.io/maquetapetrolera/">
+    <meta property="og:type" content="website">
+
     <!-- Fuentes modernas -->
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&family=Inter:wght@400;500&display=swap"
@@ -159,7 +164,7 @@
         /* Lado Derecho: Información del Proyecto */
         .info-section {
             flex: 4;
-            display: flex;
+            display: none;
             flex-direction: column;
             justify-content: flex-start; /* Permite una lectura fluida de textos largos de arriba a abajo */
             padding: 50px 40px; /* Incrementa el espacio superior y reduce márgenes laterales para mayor elegancia */
@@ -205,7 +210,7 @@
             font-family: 'Inter', sans-serif;
             font-size: 15px;
             line-height: 1.6;
-            color: var(--text-secondary);
+            color: #ffffff;
             margin-bottom: 30px;
             max-width: 500px;
             white-space: pre-wrap;
@@ -681,6 +686,66 @@
                 padding: 16px;
             }
         }
+
+        /* --- BOTÓN DE WHATSAPP FLOTANTE PREMIUM --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(37, 211, 102, 0.3);
+            z-index: 999;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .whatsapp-float svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(5deg);
+            background-color: #20ba5a;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(37, 211, 102, 0.5);
+        }
+
+        .whatsapp-float .tooltip-text {
+            visibility: hidden;
+            width: 140px;
+            background-color: #0a1626;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 6px 0;
+            position: absolute;
+            z-index: 1000;
+            right: 75px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            border: 1px solid var(--accent-primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .whatsapp-float:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Ocultar botón flotante cuando el modal esté abierto */
+        body.modal-open .whatsapp-float {
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 
@@ -705,61 +770,60 @@
 
         <!-- SECCIÓN DERECHA: INFORMACIÓN Y DESCRIPCIÓN -->
         <section class="info-section">
-            <div class="badge">Trabajo Artesanal</div>
-
-            <h1 id="info-title">Torre de Perforación</h1>
-            <span id="info-price" class="price-tag">$1.100.100 COP</span>
-
-            <p id="info-desc" class="description">Maqueta de alta precisión fabricada en madera MDF de primera calidad mediante corte láser y ensamblada a mano. Una pieza de exhibición premium, realista y de gran impacto visual, ideal para entornos corporativos.
-
-Ideal para:
-
-Exhibiciones corporativas y stands industriales
-Oficinas de ingeniería y energía
-Regalos ejecutivos especializados
-Coleccionistas y apasionados de la industria petrolera y de perforación</p>
-
+            <div class="badge" id="infoBadge">MAQUETA DISPONIBLE</div>
+            
+            <h1 id="info-title">Torre Petrolera</h1>
+            <span class="price-tag" id="info-price">$1.200.000 COP</span>
+            
+            <p class="description" id="info-description">
+                Selecciona una maqueta para ver su información detallada.
+            </p>
+            
             <div class="specs-grid">
-                <div class="spec-item full-width">
-                    <span class="spec-label">Material Principal</span>
-                    <span class="spec-value">Fabricado en MDF de 2.7 mm, impermeabilizado y endurecido para ofrecer mayor resistencia y durabilidad.</span>
-                </div>
                 <div class="spec-item">
-                    <span class="spec-label">Dimensiones</span>
-                    <span id="info-dim" class="spec-value">63 cm de altura, base 19 x 20 cm</span>
+                    <span class="spec-label">📏 Dimensiones</span>
+                    <span class="spec-value" id="info-dimensions">63 cm de altura, base 19 x 20 cm</span>
                 </div>
+                
                 <div class="spec-item">
-                    <span class="spec-label">Disponibilidad</span>
-                    <span class="spec-value">Por Encargo</span>
+                    <span class="spec-label">🎨 Material</span>
+                    <span class="spec-value">MDF + Corte Láser</span>
+                </div>
+                
+                <div class="spec-item">
+                    <span class="spec-label">⏱️ Disponibilidad</span>
+                    <span class="spec-value" id="info-availability">Por Encargo</span>
+                </div>
+                
+                <div class="spec-item">
+                    <span class="spec-label">📦 Tiempo Entrega</span>
+                    <span class="spec-value" id="info-delivery">20 a 30 días</span>
                 </div>
             </div>
-
+            
             <div class="contact-card">
                 <div class="contact-card-header">
                     <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                     </svg>
-                    <span class="contact-title">Contacto de Ingeniería</span>
+                    <span class="contact-title">¿Interesado?</span>
                 </div>
+                
                 <div class="contact-details">
                     <div class="contact-item">
-                        <span class="contact-label">Contacto</span>
-                        <span class="contact-value highlight">Ing. Javier Barragán Ferreira</span>
+                        <span class="contact-label">Ingeniero</span>
+                        <span class="contact-value highlight">Javier Barragán</span>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-label">Celular</span>
-                        <a href="https://wa.me/573155432975?text=Hola,%20estoy%20interesado%20en%20una%20maqueta%20de%20perforación" target="_blank" class="contact-link">
-                            <svg class="phone-icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.73-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.688 2.019 14.218 1.002 12.01 1.002c-5.448 0-9.879 4.373-9.883 9.802-.001 1.942.508 3.84 1.47 5.517L2.617 21.06l4.908-1.288.122-.078z"/>
-                            </svg>
-                            315 543 2975
-                        </a>
+                        <span class="contact-label">Teléfono</span>
+                        <span class="contact-value">+57 315 543 2975</span>
                     </div>
-                    <div class="contact-item">
-                        <span class="contact-label">Ubicación</span>
-                        <span class="contact-value">Barrancabermeja - Santander</span>
-                    </div>
+                    <a href="https://wa.me/573155432975?text=Hola%20Javier,%20estoy%20interesado%20en%20una%20maqueta%20petrolera" target="_blank" class="contact-link">
+                        WhatsApp
+                        <svg class="phone-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.73-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.688 2.019 14.218 1.002 12.01 1.002c-5.448 0-9.879 4.373-9.883 9.802-.001 1.942.508 3.84 1.47 5.517L2.617 21.06l4.908-1.288z"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </section>
@@ -775,53 +839,147 @@ Coleccionistas y apasionados de la industria petrolera y de perforación</p>
             </div>
             
             <div class="modal-filters">
-                <button class="filter-btn active" onclick="filterGallery('maquetas', this)">Maquetas</button>
-                <button class="filter-btn" onclick="filterGallery('videos', this)">Videos</button>
-                <button class="filter-btn" onclick="filterGallery('machines', this)">Machines</button>
-                <button class="filter-btn" onclick="filterGallery('accesorios', this)">Accesorios</button>
+                <button class="filter-btn active" onclick="filterGallery('torres', this)">Torres (Fotos)</button>
+                <button class="filter-btn" onclick="filterGallery('maquinas', this)">Máquinas de Bombeo</button>
+                <button class="filter-btn" onclick="filterGallery('videos', this)">Balancines (Videos)</button>
             </div>
             
             <div class="grid-container" id="modalGridContainer">
                 <!-- Se genera dinámicamente con JS -->
             </div>
-     <!-- Script para Galería Dinámica y Adaptabilidad Móvil -->
+        </div>
+    </div>
+
+    <!-- Botón de WhatsApp Flotante Premium -->
+    <a href="https://wa.me/573155432975?text=Hola,%20estoy%20interesado%20en%20una%20maqueta%20de%20perforación" target="_blank" class="whatsapp-float" title="Contactar por WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.73-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.688 2.019 14.218 1.002 12.01 1.002c-5.448 0-9.879 4.373-9.883 9.802-.001 1.942.508 3.84 1.47 5.517L2.617 21.06l4.908-1.288.122-.078z"/>
+        </svg>
+        <span class="tooltip-text">Ing. Javier Barragán</span>
+    </a>
+
+    <!-- Script para Galería Dinámica y Adaptabilidad Móvil -->
     <script>
-        // Catálogo de maquetas (limitado a exactamente 10 maquetas y 3 videos)
-        const DESCRIPCION_ESTANDAR = `Maqueta de alta precisión fabricada en madera MDF de primera calidad mediante corte láser y ensamblada a mano. Una pieza de exhibición premium, realista y de gran impacto visual, ideal para entornos corporativos.
+        // Catálogo de maquetas dinámico y auto-generado
+        const DESCRIPCION_TORRE = {
+            title: 'Torre Petrolera',
+            price: '$1.200.000 COP',
+            desc: `Maqueta de alta precisión fabricada en madera MDF de primera calidad mediante corte láser y ensamblada a mano. Una pieza de exhibición premium, realista y de gran impacto visual, ideal para entornos corporativos.`,
+            dim: '63 cm de altura, base 19 x 20 cm',
+            availability: 'Por Encargo',
+            delivery: '20 a 30 días'
+        };
 
-Ideal para:
+        const DESCRIPCION_MAQUINA = {
+            title: 'Máquina de Bombeo (UBM)',
+            price: '$200.000 COP',
+            desc: `Maqueta de alta precisión fabricada en madera MDF de primera calidad mediante corte láser y ensamblada a mano. Una pieza de exhibición premium, realista y de gran impacto visual, ideal para entornos corporativos.`,
+            dim: '21 cm de altura, base 22 x 9 cm',
+            availability: 'Por Encargo',
+            delivery: '2 semanas'
+        };
 
-Exhibiciones corporativas y stands industriales
-Oficinas de ingeniería y energía
-Regalos ejecutivos especializados
-Coleccionistas y apasionados de la industria petrolera y de perforación`;
+        const maquetas = [];
 
-        const maquetas = [
-            { id: 11, type: 'image', src: 'fotos/Torre 11.jpeg', fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop', title: 'Torre de Perforación', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
-            { id: 14, type: 'image', src: 'fotos/Torre 14.jpeg', fallback: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop', title: 'Torre de Perforación', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
-            { id: 15, type: 'image', src: 'fotos/Torre 15.jpeg', fallback: 'https://images.unsplash.com/photo-1582216892523-a53ed0984dd8?q=80&w=1000&auto=format&fit=crop', title: 'Torre de Perforación', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
-            { id: 21, type: 'image', src: 'fotos/Torre 21.jpeg', fallback: 'https://images.unsplash.com/photo-1516016149912-3b10bce90dce?q=80&w=1000&auto=format&fit=crop', title: 'Torre de Perforación', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
-            { id: 23, type: 'image', src: 'fotos/Torre 23.jpeg', fallback: 'https://images.unsplash.com/photo-1516016149912-3b10bce90dce?q=80&w=1000&auto=format&fit=crop', title: 'Torre de Perforación', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
-            { id: 24, type: 'image', src: 'fotos/Torre 24.jpeg', fallback: 'https://images.unsplash.com/photo-1516016149912-3b10bce90dce?q=80&w=1000&auto=format&fit=crop', title: 'Torre de Perforación', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
-            { id: 28, type: 'image', src: 'fotos/Torre 28.jpeg', fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop', title: 'Torre de Perforación', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
-            { id: 31, type: 'image', src: 'fotos/Torre 31.jpeg', fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop', title: 'Torre de Perforación', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
-            { id: 37, type: 'image', src: 'fotos/Torre 37.jpeg', fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop', title: 'Torre de Perforación', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' },
-            { id: 39, type: 'image', src: 'fotos/Torre 39.jpeg', fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop', title: 'Torre de Perforación', price: '$1.100.100 COP', desc: DESCRIPCION_ESTANDAR, dim: '63 cm de altura, base 19 x 20 cm' }
-        ];
+        // Agregar Torre 1a
+        maquetas.push({
+            id: '1a',
+            type: 'image',
+            category: 'torres',
+            src: 'fotos/Torre 1a.jpeg',
+            fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop',
+            title: DESCRIPCION_TORRE.title,
+            price: DESCRIPCION_TORRE.price,
+            desc: DESCRIPCION_TORRE.desc,
+            dim: DESCRIPCION_TORRE.dim,
+            availability: DESCRIPCION_TORRE.availability,
+            delivery: DESCRIPCION_TORRE.delivery
+        });
 
-        // Agregar exactamente los 3 videos (.mp4)
+        // Agregar las 40 torres numeradas
+        for (let i = 1; i <= 40; i++) {
+            maquetas.push({
+                id: i,
+                type: 'image',
+                category: 'torres',
+                src: `fotos/Torre ${i}.jpeg`,
+                fallback: 'https://images.unsplash.com/photo-1621504450181-5d174092b3d1?q=80&w=1000&auto=format&fit=crop',
+                title: DESCRIPCION_TORRE.title,
+                price: DESCRIPCION_TORRE.price,
+                desc: DESCRIPCION_TORRE.desc,
+                dim: DESCRIPCION_TORRE.dim,
+                availability: DESCRIPCION_TORRE.availability,
+                delivery: DESCRIPCION_TORRE.delivery
+            });
+        }
+
+        // Agregar máquinas de bombeo (UBM)
+        maquetas.push({
+            id: 'm1',
+            type: 'image',
+            category: 'maquinas',
+            src: 'fotos/Machin 1.jpeg',
+            fallback: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1000&auto=format&fit=crop',
+            title: DESCRIPCION_MAQUINA.title,
+            price: DESCRIPCION_MAQUINA.price,
+            desc: DESCRIPCION_MAQUINA.desc,
+            dim: DESCRIPCION_MAQUINA.dim,
+            availability: DESCRIPCION_MAQUINA.availability,
+            delivery: DESCRIPCION_MAQUINA.delivery
+        });
+
+        maquetas.push({
+            id: 'm2',
+            type: 'image',
+            category: 'maquinas',
+            src: 'fotos/Machin 2.jpeg',
+            fallback: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1000&auto=format&fit=crop',
+            title: DESCRIPCION_MAQUINA.title,
+            price: DESCRIPCION_MAQUINA.price,
+            desc: DESCRIPCION_MAQUINA.desc,
+            dim: DESCRIPCION_MAQUINA.dim,
+            availability: DESCRIPCION_MAQUINA.availability,
+            delivery: DESCRIPCION_MAQUINA.delivery
+        });
+
+        // Agregar los 3 videos con portadas fotográficas reales
         maquetas.push(
-            { id: 41, type: 'video', src: 'fotos/Video 1.mp4', fallback: '', title: 'Balancín en Movimiento Real', price: 'Video Demostrativo', desc: 'Demostración en video de la mecánica de movimiento realista y flujo operativo de la maqueta del balancín.', dim: 'Video Demostrativo' },
-            { id: 42, type: 'video', src: 'fotos/Video 2.mp4', fallback: '', title: 'Ciclo de Bombeo Mecánico', price: 'Video Demostrativo', desc: 'Foco detallado en las uniones mecánicas, engranajes y la suavidad del recorrido de bombeo articulado.', dim: 'Video Demostrativo' },
-            { id: 43, type: 'video', src: 'fotos/Video 3.mp4', fallback: '', title: 'Presentación y Acabados de la Torre', price: 'Video Demostrativo', desc: 'Video en alta resolución que resalta las texturas del MDF, la simetría del corte láser y la estabilidad general.', dim: 'Video Demostrativo' }
+            { id: 'v1', type: 'video', category: 'videos', src: 'fotos/Video 1.mp4', poster: 'fotos/Torre 1.jpeg', title: 'Balancín en Movimiento Real', price: 'Video Demostrativo', desc: 'Demostración en video de la mecánica de movimiento realista y flujo operativo de la maqueta del balancín.', dim: 'Video Demostrativo', availability: 'Video' },
+            { id: 'v2', type: 'video', category: 'videos', src: 'fotos/Video 2.mp4', poster: 'fotos/Torre 15.jpeg', title: 'Ciclo de Bombeo Mecánico', price: 'Video Demostrativo', desc: 'Foco detallado en las uniones mecánicas, engranajes y la suavidad del recorrido de bombeo articulado.', dim: 'Video Demostrativo', availability: 'Video' },
+            { id: 'v3', type: 'video', category: 'videos', src: 'fotos/Video 3.mp4', poster: 'fotos/Torre 21.jpeg', title: 'Presentación y Acabados de la Torre', price: 'Video Demostrativo', desc: 'Video en alta resolución que resalta las texturas del MDF, la simetría del corte láser y la estabilidad general.', dim: 'Video Demostrativo', availability: 'Video' }
         );
+
+        // Construye la descripción estructurada para mostrar en el panel de información
+        function buildFullDesc(item) {
+            const availability = item.availability || 'Por Encargo';
+            return `Titulo: ${item.title} , Precio: ${item.price} , Desc: ${item.desc} , Dim: ${item.dim} , Disponibilidad: ${availability}`;
+        }
+
+        // Permite asociar una descripción personalizada buscando por nombre parcial (ej. 'torre 1')
+        function setCustomDescription(name, customDesc, availability) {
+            const needle = name.toString().toLowerCase();
+            let matched = 0;
+            maquetas.forEach(item => {
+                if ((item.title && item.title.toLowerCase().includes(needle)) || (item.src && item.src.toLowerCase().includes(needle)) || (item.id && item.id.toString().toLowerCase() === needle)) {
+                    item.desc = customDesc;
+                    if (availability) item.availability = availability;
+                    matched++;
+                }
+            });
+            // If the currently displayed item matches, refresh UI
+            const currentTitle = document.getElementById('info-title').textContent;
+            const current = maquetas.find(it => it.title === currentTitle);
+            if (current) selectItem(current);
+            return matched;
+        }
+
+        // Nota: las descripciones personalizadas se aplicarán cuando el DOM esté listo.
 
         // Renderizar miniaturas de la tira horizontal (primeras 6 + botón Ver Más)
         function renderThumbnailStrip() {
             const strip = document.getElementById('thumbnailStrip');
             strip.innerHTML = '';
 
-            // Tomamos las primeras 6 maquetas destacadas
             const featured = maquetas.slice(0, 6);
 
             featured.forEach((item, index) => {
@@ -829,10 +987,9 @@ Coleccionistas y apasionados de la industria petrolera y de perforación`;
                 thumb.className = `thumb-wrap ${index === 0 ? 'active' : ''}`;
                 thumb.onclick = () => selectItem(item, thumb);
 
-                // Si es video, usamos una miniatura alternativa o el primer video con un badge
                 if (item.type === 'video') {
                     thumb.innerHTML = `
-                        <img src="fotos/Torre 2.jpeg" alt="${item.title}">
+                        <img src="${item.poster}" alt="${item.title}">
                         <div class="thumb-video-badge">
                             <svg viewBox="0 0 24 24" width="14" height="14"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
                         </div>
@@ -844,7 +1001,6 @@ Coleccionistas y apasionados de la industria petrolera y de perforación`;
                 strip.appendChild(thumb);
             });
 
-            // Botón de "+ Ver Todas" al final de la tira
             const moreBtn = document.createElement('div');
             moreBtn.className = 'thumb-wrap thumb-more-btn';
             moreBtn.onclick = () => toggleModal(true);
@@ -858,30 +1014,15 @@ Coleccionistas y apasionados de la industria petrolera y de perforación`;
             strip.appendChild(moreBtn);
         }
 
-        // Función para determinar la categoría según el nombre del archivo o tipo
         function getCategory(item) {
-            const src = (item.src || '').toLowerCase();
-            const type = (item.type || '').toLowerCase();
-            if (src.includes('torre')) {
-                return 'maquetas';
-            } else if (src.includes('video') || type === 'video' || src.endsWith('.mp4')) {
-                return 'videos';
-            } else if (src.includes('machin')) {
-                return 'machines';
-            } else if (src.includes('acceso')) {
-                return 'accesorios';
-            }
-            return type === 'video' ? 'videos' : 'maquetas';
+            return item.category || 'maquetas';
         }
 
-        // Renderizar el modal con todas las fotos y videos
-        function renderModalGrid(filter = 'maquetas') {
+        function renderModalGrid(filter = 'torres') {
             const grid = document.getElementById('modalGridContainer');
             grid.innerHTML = '';
 
-            const filtered = maquetas.filter(item => {
-                return getCategory(item) === filter;
-            });
+            const filtered = maquetas.filter(item => getCategory(item) === filter);
 
             filtered.forEach(item => {
                 const gridItem = document.createElement('div');
@@ -894,7 +1035,7 @@ Coleccionistas y apasionados de la industria petrolera y de perforación`;
 
                 if (item.type === 'video') {
                     gridItem.innerHTML = `
-                        <img src="fotos/Torre 2.jpeg" alt="${item.title}">
+                        <img src="${item.poster}" alt="${item.title}">
                         <div class="thumb-video-badge">
                             <svg viewBox="0 0 24 24" width="16" height="16"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
                         </div>
@@ -907,23 +1048,23 @@ Coleccionistas y apasionados de la industria petrolera y de perforación`;
             });
         }
 
-        // Seleccionar un ítem de la galería (Foto o Video)
         function selectItem(item, thumbElement = null) {
             const mainImg = document.getElementById('mainImage');
             const mainVid = document.getElementById('mainVideo');
+            const infoSection = document.querySelector('.info-section');
+            if (infoSection) infoSection.style.display = 'flex';
 
-            // Actualizar textos dinámicos
+            // Actualizar información en el panel derecho
             document.getElementById('info-title').textContent = item.title;
             document.getElementById('info-price').textContent = item.price;
-            document.getElementById('info-desc').textContent = item.desc;
-            document.getElementById('info-dim').textContent = item.dim;
+            document.getElementById('info-description').textContent = item.desc;
+            document.getElementById('info-dimensions').textContent = item.dim;
+            document.getElementById('info-availability').textContent = item.availability;
+            document.getElementById('info-delivery').textContent = item.delivery || '2-3 semanas';
 
-            // Manejo de visibilidad y fuente de Foto vs Video
             if (item.type === 'video') {
-                // Transición desvanecida
                 mainImg.style.opacity = '0';
                 mainVid.style.opacity = '0';
-
                 setTimeout(() => {
                     mainImg.style.display = 'none';
                     mainVid.style.display = 'block';
@@ -933,28 +1074,22 @@ Coleccionistas y apasionados de la industria petrolera y de perforación`;
             } else {
                 mainImg.style.opacity = '0';
                 mainVid.style.opacity = '0';
-
                 setTimeout(() => {
                     mainVid.style.display = 'none';
                     mainVid.pause();
                     mainImg.style.display = 'block';
                     mainImg.src = item.src;
-                    mainImg.onerror = function() {
-                        this.src = item.fallback;
-                    };
+                    mainImg.onerror = () => { mainImg.src = item.fallback; };
                     mainImg.style.opacity = '1';
                 }, 300);
             }
 
-            // Si se pasa el elemento miniatura directamente, actualizar la clase activa en la tira
             if (thumbElement) {
-                const thumbs = document.querySelectorAll('.thumb-wrap');
-                thumbs.forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.thumb-wrap').forEach(t => t.classList.remove('active'));
                 thumbElement.classList.add('active');
             } else {
-                // Si viene del modal, buscar en la tira si coincide el src y activarlo
-                const thumbs = document.querySelectorAll('.thumb-wrap');
-                thumbs.forEach(t => {
+                document.querySelectorAll('.thumb-wrap').forEach(t => {
+                    if (t.classList.contains('thumb-more-btn')) return;
                     const img = t.querySelector('img');
                     if (img && img.getAttribute('src') === item.src) {
                         t.classList.add('active');
@@ -965,36 +1100,31 @@ Coleccionistas y apasionados de la industria petrolera y de perforación`;
             }
         }
 
-        // Abrir/Cerrar Modal
         function toggleModal(show) {
             const modal = document.getElementById('galleryModal');
             if (show) {
-                renderModalGrid('maquetas');
-                // Resetear botones de filtro del modal
+                document.body.classList.add('modal-open');
+                renderModalGrid('torres');
                 const filterBtns = document.querySelectorAll('.filter-btn');
                 filterBtns.forEach(btn => btn.classList.remove('active'));
                 filterBtns[0].classList.add('active');
-                
                 modal.classList.add('show');
             } else {
+                document.body.classList.remove('modal-open');
                 modal.classList.remove('show');
             }
         }
 
-        // Filtrar galería dentro del modal
         function filterGallery(type, buttonElement) {
-            // Actualizar clase activa del botón
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            filterBtns.forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             buttonElement.classList.add('active');
-
-            // Renderizar con filtro
             renderModalGrid(type);
         }
 
-        // Inicializar galería
         window.addEventListener('DOMContentLoaded', () => {
+            // Renderizar el primer elemento
             renderThumbnailStrip();
+            selectItem(maquetas[0]);
         });
     </script>
 </body>
