@@ -1143,15 +1143,15 @@
 
         const DESCRIPCION_MAQUINA = {
             title: 'Máquina de Bombeo (UBM)',
-            price: '$200.000 COP',
+            price: '$250.000 COP',
             desc: `Maqueta de alta precisión fabricada en MDF de primera calidad mediante corte láser y ensamblada a mano. Una pieza de exhibición premium, realista y de gran impacto visual, ideal para entornos corporativos.`,
-            dim: '21 cm de altura, base 22 x 9 cm',
+            dim: '21 cm de altura, base 22 x 9 cm, base principal 15 x30 cm',
             availability: 'Por Encargo',
             delivery: '2 semanas',
             badge: 'Maqueta disponible',
             kicker: 'Maqueta funcional de',
             traits: ['Detalle', 'Escala', 'Presentación'],
-            materialSpec: 'MDF + Corte Láser',
+            materialSpec: 'MDF + Corte Láser, piedras e iguana impresa en 3D',
             benefits: [
                 {
                     marker: '01',
@@ -1192,6 +1192,7 @@
 
         // Agregar las 40 torres numeradas
         for (let i = 1; i <= 40; i++) {
+            if (i === 11 || i === 12 || i === 29 || i === 33 || i === 36 || i === 38) continue;
             maquetas.push({
                 id: i,
                 type: 'image',
@@ -1227,6 +1228,20 @@
             type: 'image',
             category: 'maquinas',
             src: 'fotos/Machin 2.jpeg',
+            fallback: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1000&auto=format&fit=crop',
+            title: DESCRIPCION_MAQUINA.title,
+            price: DESCRIPCION_MAQUINA.price,
+            desc: DESCRIPCION_MAQUINA.desc,
+            dim: DESCRIPCION_MAQUINA.dim,
+            availability: DESCRIPCION_MAQUINA.availability,
+            delivery: DESCRIPCION_MAQUINA.delivery
+        });
+
+        maquetas.push({
+            id: 'm4',
+            type: 'image',
+            category: 'maquinas',
+            src: 'fotos/Machin 4.jpeg',
             fallback: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=1000&auto=format&fit=crop',
             title: DESCRIPCION_MAQUINA.title,
             price: DESCRIPCION_MAQUINA.price,
