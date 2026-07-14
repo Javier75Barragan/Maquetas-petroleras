@@ -984,12 +984,11 @@
 
         <!-- SECCIÓN DERECHA: INFORMACIÓN Y DESCRIPCIÓN -->
 <section class="info-section">
-            <img class="info-logo" src="fotos/logo torre.png" alt="Logo Torre" onerror="this.style.display='none'">
-            <div class="badge" id="infoBadge">MAQUETA DISPONIBLE</div>
-            <div class="info-kicker" id="info-kicker">Maqueta premium de</div>
-
             <h1 id="info-title">Torre Petrolera</h1>
-            <span class="price-tag" id="info-price">$1.200.000 COP</span>
+            <span class="price-tag" id="info-price">
+                $1.200.000 COP 
+                <img src="https://flagcdn.com/w40/co.png" alt="Colombia" style="height: 24px; vertical-align: middle; margin-left: 8px; border-radius: 4px;">
+            </span>
 
             <div class="trait-line" id="info-traits">
                 <span>Precisión</span>
@@ -1441,10 +1440,8 @@
             if (infoSection) infoSection.style.display = 'flex';
 
             // Actualizar información en el panel derecho
-            document.getElementById('infoBadge').textContent = (content.badge || content.availability || 'Disponible').toUpperCase();
-            document.getElementById('info-kicker').textContent = content.kicker || 'Maqueta destacada de';
             document.getElementById('info-title').textContent = content.title;
-            document.getElementById('info-price').textContent = content.price;
+            document.getElementById('info-price').innerHTML = content.price + ' <img src="https://flagcdn.com/w40/co.png" alt="Colombia" style="height: 24px; vertical-align: middle; margin-left: 8px; border-radius: 4px;">';
             renderTraits(content.traits || []);
             document.getElementById('info-description').textContent = content.desc;
             renderBenefits(content.benefits || []);
